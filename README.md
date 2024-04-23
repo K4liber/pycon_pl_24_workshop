@@ -2,15 +2,29 @@
 
 Tytuł zgłoszenia:
  
- 
+Concurrent and parallel programming in python
+
 Krótki opis(128)
  
-Opis ten zostanie zamieszczony na stronie konferencji (po akceptacji propozycji)
+Since Python 3.13, we can ...
  
 Cel propozycji (3072)
  
 Napisz krótko co jest celem Twojej propozycji (np. zapoznanie uczestników z ciekawym problemem X, biblioteką Y, którą stworzyłeś/stworzyłaś)
- 
+
+The goal is to introduce the new approach for the parallel programming in Python.
+The new approach will be available throught Python API starting from Python 3.13.
+Python 3.13 is going to be relased in October 2024 and you can already understand the advantages 
+of the feature thanks to our workshop.
+Starting from Python 3.12, the feature is available throught Python C/API.
+We are going to explain it based on suitable use cases.
+The feature is called "Per-intepreter GIL".
+
+Starting from Python 3.13, developers can use the new approach 
+
+We are going to explain the differences between concurrent and parallel programming.
+.
+
  
 Grupa docelowa(3072)
  
