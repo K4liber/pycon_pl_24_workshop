@@ -2,11 +2,11 @@
 
 ## Tytuł zgłoszenia:
  
-Multicore processing in Python with Per-interpreter GIL
+Multicore processing in Python using Per-interpreter GIL
 
 ## Krótki opis(128)
  
-Exploring a new feature in Python called Per-interpreter GIL. It allows using multiple cores in a single Python process.
+Exploring a new Python feature called Per-interpreter GIL. It allows to use multiple cores in a single Python (CPython) process.
 
 ## Cel propozycji (3072)
  
@@ -53,7 +53,7 @@ The workshop focuses on a practical exploration of a relatively new feature in P
 
 Threads and processes are two fundamental units of program execution. While both are integral to how a computer performs tasks, they possess distinct characteristics and fulfill different purposes. Threads are lightweight units of execution that share the same memory space within a process, allowing for efficient task parallelism within a single application. Processes are independent units of execution, each with its own memory space, providing strong isolation but requiring more resources and complexity to communicate between them. Understanding how one can utilize advantages of threads and/or processes in Python, it can help to execute computations more optimally.
 
-3. Combating the disadvantages of the existence of GIL
+3. Combating the disadvantages of GIL
 
 GIL assure that only one thread executes Python bytecode at a time. While the GIL can limit the execution speed of multi-threaded Python programs, it greatly simplifies development. For instance, performing operations on a shared dictionary across multiple threads will not lead to race conditions or data corruption. Furthermore, the GIL is released during I/O operations, such as reading or writing to a file or socket, which allows threads to run in parallel in these scenarios. The GIL is designed to facilitate multi-threading, and understanding its behavior can help developers write more efficient code. Disabling the GIL to execute a set of pure Python functions across multiple threads might seem safe, especially if those functions do not appear to manipulate shared state explicitly. However, the CPython interpreter performs certain implicit actions that may affect shared state. For example, operations altering "reference counts" and "string interning" are two mechanisms that involve shared state. Because of that, it is not safe to disable the GIL for "pure" Python functions in multi-threaded execution. Even if functions appear pure at the code level, they may not be pure in the context of the CPython interpreter, which involves shared state access during execution. Another strategy to bypass GIL is to use a Python implementation without GIL, such as PyPy, Jython, or IronPython. Obviosuly, no one would like to do that since CPython is the reference implementation of the Python programming language and effectively attracts developers with a wealth of useful libraries. With a Per-interpreter GIL we get all three advantages:
 - using CPython with a wealth of useful libraries
@@ -62,7 +62,7 @@ GIL assure that only one thread executes Python bytecode at a time. While the GI
 
 4. Show me some data
 
-Beyond theoretical explanation, we are going to present a performance of regular threads/processed based applications in comparison to Per-interpreter GIL based one. We are going to prepare a basic sever-side and desktop (PyQT) applications to experiment with.
+Beyond theoretical explanation, we are going to present a performance of regular threads/processed based applications in comparison to Per-interpreter GIL based one. We are going to prepare a basic sever-side and desktop (PyQT) applications to experiment with. The participants are going to play with the prepared code. We will together experiment with different scenarios. As a final step we are going to prepare some charts summarizing the benefits we can get from using Per-interpreter GIL.
 
 ## Plan propozycji (3072)
 
