@@ -36,10 +36,9 @@ During the workshop we are going to learn:
 
 The workshop is addressed to people who use concurrent programming or parallel programming when creating applications. We are going to remind how one can use concurrent and parallel programming in Python. There is no need to already have an advanced knowledge on those topics. The participants should rather have a basic knowledge about Python. Since a significant amount of Python programs use some form of demanding calculations, it is valuable to know all the available options when it comes to parallel programming. If you eager to optimize your computations in Python, the workshop could help you with that.
 
+Note for Python newbies/beginners:
 
-Note for begineers:
-Even if somehow you do not have a basic knowledge about Python, we are going to present some generic IT concepts. Because of that, every person with basic IT knowledge could learn something from the workshop. If you just starting with Python, it could be hard to understand some of the things we are going to talk about. Still you will manage to understand some parts and can ask for clarification. We are happy to answer your question both during the workshop and after its completion.
-
+Being a PyCon participant does not always indicate any knowledge about Python. For example, one might be a Java programmer and out of curiosity would like to see what's going on on the other side of the force. Without any Python knowledge, the workshop can still be a valuable experience, beacuse we are going to present some generic IT concepts. Every person with basic IT knowledge can learn something from the workshop. If you just starting with Python, it could be hard to understand some of the things we are going to talk about. Still you will manage to understand some parts and can ask for clarification. We are happy to answer your question both during the workshop and after its completion.
 
 ## Szczegółowy abstract (6144)
  
@@ -55,12 +54,12 @@ Threads and processes are two fundamental units of program execution. While both
 
 3. Combating the disadvantages of GIL
 
-GIL assure that only one thread executes Python bytecode at a time. While the GIL can limit the execution speed of multi-threaded Python programs, it greatly simplifies development. For instance, performing operations on a shared dictionary across multiple threads will not lead to race conditions or data corruption. Furthermore, the GIL is released during I/O operations, such as reading or writing to a file or socket, which allows threads to run in parallel in these scenarios. The GIL is designed to facilitate multi-threading, and understanding its behavior can help developers write more efficient code. Disabling the GIL to execute a set of pure Python functions across multiple threads might seem safe, especially if those functions do not appear to manipulate shared state explicitly. However, the CPython interpreter performs certain implicit actions that may affect shared state. For example, operations altering "reference counts" and "string interning" are two mechanisms that involve shared state. Because of that, it is not safe to disable the GIL for "pure" Python functions in multi-threaded execution. Even if functions appear pure at the code level, they may not be pure in the context of the CPython interpreter, which involves shared state access during execution. Another strategy to bypass GIL is to use a Python implementation without GIL, such as PyPy, Jython, or IronPython. Obviosuly, no one would like to do that since CPython is the reference implementation of the Python programming language and effectively attracts developers with a wealth of useful libraries. With a Per-interpreter GIL we get all three advantages:
+GIL assure that only one thread executes Python bytecode at a time. While the GIL can limit the execution speed of multi-threaded Python programs, it greatly simplifies development. For instance, performing operations on a shared dictionary across multiple threads will not lead to race conditions or data corruption. Furthermore, the GIL is released during I/O operations, such as reading or writing to a file or socket, which allows threads to run in parallel in these scenarios. The GIL is designed to facilitate multi-threading, and understanding its behavior can help developers write more efficient code. Disabling the GIL to execute a set of pure Python functions across multiple threads might seem safe, especially if those functions do not appear to manipulate shared state explicitly. However, the CPython interpreter performs certain implicit actions that may affect shared state. For example, operations altering "reference counts" and "string interning" are two mechanisms that involve shared state. Because of that, it is not safe to disable the GIL for "pure" Python functions in multi-threaded execution. Even if functions appear pure at the code level, they may not be pure in the context of the CPython interpreter, which involves shared state access during execution. Another strategy to bypass GIL is to use a Python implementation without GIL, such as PyPy, Jython, or IronPython. Obviosuly, not a lot of us would like to go for it. CPython is the reference implementation of the Python programming language and effectively attracts developers with a wealth of useful libraries. With a Per-interpreter GIL we get all three advantages:
 - using CPython with a wealth of useful libraries
 - simplified development due to GIL
 - multi core utilization in a single python process
 
-4. Show me some data
+4. Benchmark summary
 
 Beyond theoretical explanation, we are going to present a performance of regular threads/processed based applications in comparison to Per-interpreter GIL based one. We are going to prepare a basic sever-side and desktop (PyQT) applications to experiment with. The participants are going to play with the prepared code. We will together experiment with different scenarios. As a final step we are going to prepare some charts summarizing the benefits we can get from using Per-interpreter GIL.
 
@@ -78,7 +77,7 @@ Beyond theoretical explanation, we are going to present a performance of regular
 
 2. Practical part (60 minutes)
 
-- Installing the required python environemnt.
+- Installing the Python environemnt.
 - Exercise 1. Undestanding the GIL importance.
 - Exercise 2. Testing Per-Interpreter GIL performance for a server-side programming.
 - Exercise 3. Testing Per-Interpreter GIL performance for desktop (PyQT) applications.
