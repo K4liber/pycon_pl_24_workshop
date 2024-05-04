@@ -2,7 +2,7 @@
 
 ## Tytuł zgłoszenia:
  
-Multicore processing in Python using Per-interpreter GIL
+Multi-core processing in Python using Per-interpreter GIL
 
 ## Krótki opis(128)
  
@@ -12,13 +12,13 @@ Exploring a new Python feature called Per-interpreter GIL. It allows to use mult
  
 `Napisz krótko co jest celem Twojej propozycji (np. zapoznanie uczestników z ciekawym problemem X, biblioteką Y, którą stworzyłeś/stworzyłaś)`
 
-We are going to take a closer look at a new feature in Python (CPython) called Per-interpreter GIL (Global Interpreter Lock). The workshop equips participants with a better understanding of Per-interpreter GIL and its benefits for multi-core processing in Python. It aims to utilize computing resources in a more efficient way. The feature is accessible through the Python/C API starting from Python version 3.12. A Pythonic interface for this feature is anticipated to be released with Python version 3.13 (coming out on October 2024).
+We are going to take a closer look at a new feature in Python (CPython) called Per-interpreter GIL. The workshop equips participants with a better understanding of Per-interpreter GIL and its benefits for multi-core processing in Python. It aims to utilize computing resources in a more efficient way. The feature is accessible through the Python/C API starting from Python version 3.12. A Pythonic interface for this feature is anticipated to be released with Python version 3.13 (coming out on October 2024).
 
 During the workshop we are going to learn:
 
-- Threads vs. Processes in Python: A reminder and summary of threads, processes, and the GIL. We are going to explain how do we use threads and processes in Python and why GIL has such a poor reputation.
+- Threads vs. Processes in Python: A reminder and summary of threads, processes, and the GIL (Global Interpreter Lock). We are going to explain how do we use threads and processes in Python and why GIL has such a poor reputation.
 
-- Python Interpreter and GIL: The workshop explains Python's interpreter and the advantages of the GIL. Although the GIL slows down multi-threaded programs, it ensures thread safety and facilitates I/O operations. It can limit the execution speed of multi-threaded Python programs, but greatly simplifies development.
+- Python Interpreter and GIL: The workshop explains Python's interpreter basics and the advantages of the GIL. Although the GIL slows down multi-threaded programs, it ensures thread safety and facilitates I/O operations. It can limit the execution speed of multi-threaded Python programs, but greatly simplifies development.
 
 - Challenges with Disabling the GIL: Disabling the GIL for running pure Python functions across threads is risky due to implicit actions by the interpreter. We are going to provide example scenarios and test them together.
 
@@ -56,14 +56,14 @@ Threads and processes are two fundamental units of program execution. While both
 
 3. Combating the disadvantages of GIL
 
-The GIL assure that only one thread executes Python bytecode at a time. While the GIL can limit the execution speed of multi-threaded Python programs, it greatly simplifies development. For instance, performing operations on a shared dictionary across multiple threads will not lead to race conditions or data corruption. Furthermore, the GIL is released during I/O operations, such as reading or writing to a file or socket, which allows threads to run in parallel in these scenarios. The GIL is designed to facilitate multi-threading, and understanding its behavior can help developers write more efficient code. Disabling the GIL to execute a set of pure Python functions across multiple threads might seem safe, especially if those functions do not appear to manipulate shared state explicitly. However, the CPython interpreter performs certain implicit actions that may affect shared state. For example, operations altering "reference counts" and "string interning" are two mechanisms that involve shared state. Because of that, it is not safe to disable the GIL for "pure" Python functions in multi-threaded execution. Even if functions appear pure at the code level, they may not be pure in the context of the CPython interpreter, which involves shared state access during execution. Another strategy to bypass GIL is to use a Python implementation without GIL, such as PyPy, Jython, or IronPython. Obviosuly, not a lot of us would like to go for it. CPython is the reference implementation of the Python programming language and effectively attracts developers with a wealth of useful libraries. With a Per-interpreter GIL we get all three advantages:
-- using CPython with a wealth of useful libraries
-- simplified development due to GIL
-- multi core utilization in a single python process (no need for spawning processes which can introduce considerable communication and memory overhead)
+The GIL assure that only one thread executes Python bytecode at a time. While the GIL can limit the execution speed of multi-threaded Python programs, it greatly simplifies development. For instance, performing operations on a shared dictionary across multiple threads will not lead to race conditions or data corruption. Furthermore, the GIL is released during I/O operations, such as reading or writing to a file or socket, which allows threads to run in parallel in these scenarios. The GIL is designed to facilitate multi-threading, and understanding its behavior can help developers write more efficient code. Disabling the GIL to execute a set of pure Python functions across multiple threads might seem safe, especially if those functions do not appear to manipulate the shared state explicitly. However, the CPython interpreter performs certain implicit actions that may affect the shared state. For example, operations altering "reference counts" and "string interning" are two mechanisms utilizing the shared state. Because of that, it is not safe to disable the GIL for "pure" Python functions in multi-threaded execution. Even if functions appear pure at the code level, they may not be pure in the context of the CPython interpreter, which involves the shared state access during execution. Another strategy to bypass GIL is to use a Python implementation without GIL, such as PyPy, Jython, or IronPython. Obviously, not a lot of us are eager to do it. CPython is the reference implementation of the Python programming language and effectively attracts developers with a wealth of useful libraries. With the Per-interpreter GIL we get following advantages:
+- multi-core utilization in a single python process (no need for spawning processes which can introduce considerable communication and memory overhead)
+- still using reference Python implementation (CPython) with a wealth of useful libraries
+- simplified development due to the GIL
 
 4. Benchmark summary
 
-Beyond theoretical explanation, we are going to present a performance of regular threads/processed based applications in comparison to Per-interpreter GIL based one. We are going to prepare a basic sever-side and desktop (PyQT) applications to experiment with. The participants are going to play with the prepared code. We will together experiment with different scenarios. As a final step we are going to prepare some charts summarizing the benefits we can get from using Per-interpreter GIL.
+Beyond theoretical explanation, we are going to present a performance of regular threads/processed based applications in comparison to Per-interpreter GIL based one. We are going to prepare a basic sever-side and desktop (PyQT) applications to experiment with. The participants are going to play with the prepared code. We will together experiment with different scenarios. As a final step, together, we are going to discuss and summarize the benefits we can get from using the Per-interpreter GIL.
 
 ## Plan propozycji (3072)
 
@@ -83,6 +83,6 @@ Beyond theoretical explanation, we are going to present a performance of regular
 - Exercise 1. Undestanding the GIL importance.
 - Exercise 2. Testing Per-Interpreter GIL performance for a server-side programming.
 - Exercise 3. Testing Per-Interpreter GIL performance for desktop (PyQT) applications.
-- Exercise 4. Visualization of performance benchmarks results.
+- Exercise 4. Creating a summary of performance benchmarks results (e.g. in form of a chart).
 
 ## Uwagi
