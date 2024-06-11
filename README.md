@@ -86,3 +86,4 @@ Beyond theoretical explanation, we are going to present a performance of regular
 - Exercise 4. Creating a summary of performance benchmarks results (e.g. in form of a chart).
 
 ## Uwagi
+Go to links.md.
