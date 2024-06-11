@@ -1,0 +1,2 @@
+- https://us.pycon.org/2024/schedule/presentation/128/
+- https://github.com/K4liber/subinterpreters
