@@ -1,2 +1,3 @@
 - https://us.pycon.org/2024/schedule/presentation/128/
 - https://github.com/K4liber/subinterpreters
+- https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf
