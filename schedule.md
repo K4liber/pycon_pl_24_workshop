@@ -34,9 +34,25 @@
 - (NEW in 3.13!) Free Threading (https://docs.python.org/3.13/howto/free-threading-extensions.html)
 
 ### Part 5. Prepare python environments
-- python3.12
+- python3.12.4
 - python3.13t ([Free threaded python](https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf))
-
+#### Linux
+- python 3.13.0b3
+```
+git clone https://github.com/K4liber/cpython
+git checkout 3.13.0b3
+./configure --with-pydebug --disable-gil
+make clean
+make
+/python.exe -c "import sysconfig; print(sysconfig.get_config_var('Py_GIL_DISABLED'))"
+./python -c "import sys; print(sys._is_gil_enabled())"
+./python -m venv <python_3.13_venv_path>
+```
+- python 3.12.4
+```
+git clone https://github.com/K4liber/subinterpreters
+conda env create
+```
 ### Part 6. Practical cases
 
 ### GIL saves the day
