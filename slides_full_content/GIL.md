@@ -8,4 +8,11 @@ Over the years, there have been several attempts to remove or replace the GIL, b
 ![alt text](../images/knights.png)
 Removing the GIL entirely would require changes to CPython's memory management, which would likely slow down single-threaded programs. Replacing the GIL with finer-grained locks could also slow down the interpreter due to increased lock contention.  
 
-Despite its limitations, the GIL makes it easier to write thread-safe Python code, since you don't have to worry about simultaneous access to Python objects. It also makes it easier to integrate with C libraries that are not thread-safe. For these reasons, the GIL remains a fundamental part of CPython.
+Despite its limitations, the GIL makes it easier to write thread-safe Python code, since:
+- you don't have to worry about simultaneous access to Python objects
+- it also makes it easier to integrate with C libraries that are not thread-safe
+- a lot of existing C extensions rely on GIL
+- other garbage collection solutions may decrease the performance of single-threaded scripts
+For these reasons, the GIL remains a fundamental part of CPython.
+
+"Python uses a reference counter to support garbage collection and to free objects in the memory automatically when the counter reaches 0. In a single threaded environment, it works fine, but when you add support to threads, and support to share objects across thread, you need a thread-safe counter to prevent memory-leaks and prevent referencing dealocated addresses. The GIL is what makes all these counters thread-safe in a practical way, but has the disadvantage of making most multi-threaded code slow. Other languages (and even some Python interpreters) implement other garbage collection algorithms that do not require a GIL. CPython could adopt something in that direction, but there are 2 problems with that: (a) a lot of existing C extensions rely on GIL, and (b) other garbage collection solutions may decrease the performance of single-threaded scripts (which is not great already). Maybe after the faster cpython initiative, removing the GIL can become more feasible."  https://www.reddit.com/r/Python/comments/vgw40n/why_python_needs_the_gil_and_swift_doesnt/

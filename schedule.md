@@ -1,3 +1,5 @@
+## Multi-core processing in Python using Per-interpreter GIL
+
 ### Part 1. Concurrency vs parallelism
 (slides)
 ...
@@ -35,7 +37,11 @@
 
 ### Part 5. Prepare python environments
 - python3.12
+-- miniconda
+-- check on windows (checked), ubuntu (not yet), mac os (not yet)
 - python3.13t ([Free threaded python](https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf))
+-- install without any requirements and addapt the code to not import any requirements (py313t)
+-- why on JBIEL PC the CPUs were not been fully unitilized?
 
 ### Part 6. Practical cases
 
