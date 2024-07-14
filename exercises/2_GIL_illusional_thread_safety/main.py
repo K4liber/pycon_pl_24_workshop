@@ -1,3 +1,7 @@
+"""
+import dis
+dis.dis(illusional_thread_safe_task)
+"""
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 import time
@@ -19,7 +23,7 @@ def no_thread_safe_task() -> None:
     _global_dict[0] = actual_value + 1
 
 
-def actually_thread_safe_task() -> None:
+def indeed_thread_safe_task() -> None:
     with _lock:
         no_thread_safe_task()
 

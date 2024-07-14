@@ -1,0 +1,7 @@
+- Anthony Shaw, "Unlocking the Parallel Universe: Subinterpreters and Free-Threading in Python 3.13", https://us.pycon.org/2024/schedule/presentation/128/
+- Hugo van Kemenade, "Help us test free-threaded Python without the GIL", https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf
+- Łukasz Langa, The big leap of Python 3.13, https://www.youtube.com/watch?v=uL_kmagVKFQ
+- Łukasz Langa, Working Around the GIL with asyncio, https://www.youtube.com/watch?v=oVhJAVS3g00
+- Essalhiwafaa, "Python is removing the GIL and increasing concurrency.", https://medium.com/@essalhiwafaa05/python-is-removing-the-gil-and-increasing-concurrency-f38dcd6d4f5b
+- Anthony Shaw, "CPython Internals", https://realpython.com/products/cpython-internals-book/
+- Samet Yaslan, "Python in Parallel", https://ep2024.europython.eu/session/python-in-parallel-sub-interpreters-vs-nogil-vs-multiprocessing

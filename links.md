@@ -1,5 +1,0 @@
-- https://us.pycon.org/2024/schedule/presentation/128/
-- https://github.com/K4liber/subinterpreters
-- https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf
-- Łukasz Langa, The big leap of Python 3.13, https://www.youtube.com/watch?v=uL_kmagVKFQ
-- Łukasz Langa, Working Around the GIL with asyncio, https://www.youtube.com/watch?v=oVhJAVS3g00

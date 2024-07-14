@@ -7,7 +7,6 @@
 ### Part 2. Timeline in CPython parallelism context
 (background timeline on each slide in this part)
 - 1991 -> Initial release on Python
-- 1994 -> Initial realese of CPython
 - 1997 -> CPython users can run multiple interpreters in the same process (https://docs.python.org/3/c-api/init.html#sub-interpreter-support)
 - ...
 - 2001 -> the world’s first multicore processor "Power4"
@@ -22,6 +21,9 @@
 - Python vs CPython
 - Python interpreter
 - GIL
+-- ease of programming vs performance
+-- dynamic types -> slow execution
+-- automation of memory management (reference count) -> GIL
 - GIL free implementations (PyPy, IronPython)
 
 ### Part 3. Concurrency in Python
