@@ -25,6 +25,7 @@
 -- dynamic types -> slow execution
 -- automation of memory management (reference count) -> GIL
 - GIL free implementations (PyPy, IronPython)
+- python 3.11 -> 3.12 GIL relocation (image gil_place.png, subinterpreters.png)
 
 ### Part 3. Concurrency in Python
 - multithreading
@@ -38,10 +39,10 @@
 - (NEW in 3.13!) Free Threading (https://docs.python.org/3.13/howto/free-threading-extensions.html)
 
 ### Part 5. Prepare python environments
-- python3.12.4
+- `python 3.12.4`
 -- try with miniconda
 -- check on windows (checked -> works), ubuntu (not yet), mac os (not yet)
-- python3.13t ([Free threaded python](https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf))
+- `python 3.13.0b3` ([Free threaded python](https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf))
 #### Windows
 -- install without any requirements and addapt the code to not import any requirements (py313t)
 -- why on JBIEL PC the CPUs were not been fully unitilized?
@@ -62,9 +63,10 @@ make
 git clone https://github.com/K4liber/subinterpreters
 conda env create
 ```
-### Part 6. Practical cases
+### Part 6. Exercieses
 
-### GIL saves the day
+### 1. GIL - reference count on a shared state
+### 2. GIL - illusional thread safety
 ### GIL disabled (py3.13t)
 ### Desktop application (threads, multiprocessing, subinterpreters)
 ### Web server (threads, multiprocessing, subinterpreters) (FastAPI, single process ASGI unicorn)

@@ -1,0 +1,1 @@
+- "...we need to optimize EdgeDB to run in the cloud in the most cost-effective way, and reducing the memory pressure is key." (https://us.pycon.org/2024/speaker/profile/79/)
