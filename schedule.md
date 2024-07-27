@@ -18,7 +18,10 @@
 - 2024 -> Python 3.13 released with Per-Interpreter GIL and free-threading
 
 (slides)
-- Python vs CPython
+- Python (Python language specification, The Python Language Reference, Full Grammar specification) vs CPython
+
+Python is defined partly by its documentation, and partly by its "reference implementation" called CPython. 
+
 - Python interpreter
 - GIL
 -- ease of programming vs performance
@@ -44,17 +47,17 @@
 -- check on windows (checked -> works), ubuntu (not yet), mac os (not yet)
 - `python 3.13.0b3` ([Free threaded python](https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf))
 #### Windows
--- install without any requirements and addapt the code to not import any requirements (py313t)
--- why on JBIEL PC the CPUs were not been fully unitilized?
+- download `Python 3.13.0b3` installer from https://www.python.org/downloads/windows/
+- why on JBIEL PC the CPUs were not been fully unitilized while running a command line version of fibonacci test (repo `subinterpreters`)? Test it again.
+- test the repo https://github.com/tonybaloney/subinterpreter-web . It does not work on Linux (after executing `make run` we get `Aborted (core dumped)`).
 #### Linux
-- python 3.13.0b3
 ```
 git clone https://github.com/K4liber/cpython
 git checkout 3.13.0b3
 ./configure --with-pydebug --disable-gil
 make clean
 make
-/python.exe -c "import sysconfig; print(sysconfig.get_config_var('Py_GIL_DISABLED'))"
+./python -c "import sysconfig; print(sysconfig.get_config_var('Py_GIL_DISABLED'))"
 ./python -c "import sys; print(sys._is_gil_enabled())"
 ./python -m venv <python_3.13_venv_path>
 ```
