@@ -1,6 +1,22 @@
 """
 import dis
 dis.dis(illusional_thread_safe_task)
+
+>>>
+ 16           RESUME                   0
+
+ 17           LOAD_GLOBAL              0 (_global_dict)
+              LOAD_CONST               1 (0)
+              COPY                     2
+              COPY                     2
+              BINARY_SUBSCR
+              LOAD_CONST               2 (1)
+              BINARY_OP               13 (+=)
+              SWAP                     3
+              SWAP                     2
+              STORE_SUBSCR
+              RETURN_CONST             0 (None)
+              
 """
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock

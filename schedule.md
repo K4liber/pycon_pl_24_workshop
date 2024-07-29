@@ -70,6 +70,6 @@ conda env create
 
 ### 1. GIL - reference count on a shared state
 ### 2. GIL - illusional thread safety
-### GIL disabled (py3.13t)
+### GIL disabled (py3.13t) (TODO simple zadanko)
 ### Desktop application (threads, multiprocessing, subinterpreters)
 ### Web server (threads, multiprocessing, subinterpreters) (FastAPI, single process ASGI unicorn)
