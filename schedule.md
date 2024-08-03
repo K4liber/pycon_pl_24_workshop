@@ -64,7 +64,7 @@ Python is defined partly by its documentation, and partly by its "reference impl
 ```
 git clone https://github.com/K4liber/cpython
 git checkout 3.13.0b3
-./configure --with-pydebug --disable-gil
+./configure --disable-gil --enable-optimizations
 make clean
 make
 ./python -c "import sysconfig; print(sysconfig.get_config_var('Py_GIL_DISABLED'))"
