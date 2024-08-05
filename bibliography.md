@@ -6,3 +6,5 @@
 - Essalhiwafaa, "Python is removing the GIL and increasing concurrency.", https://medium.com/@essalhiwafaa05/python-is-removing-the-gil-and-increasing-concurrency-f38dcd6d4f5b
 - Anthony Shaw, "CPython Internals", https://realpython.com/products/cpython-internals-book/
 - https://us.pycon.org/2024/speaker/profile/79/
+- 
+- Orsted presentation template, https://github.com/ors-garage/company-presentation-template-revealjs
