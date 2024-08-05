@@ -1,5 +1,6 @@
-- Anthony Shaw, "Unlocking the Parallel Universe: Subinterpreters and Free-Threading in Python 3.13", https://us.pycon.org/2024/schedule/presentation/128/ , https://www.youtube.com/watch?v=lCjsy7tb420 , https://program.europython.eu/europython-2024/talk/8FKHES/
-- Samet Yaslan, "Python in Parallel", https://ep2024.europython.eu/session/python-in-parallel-sub-interpreters-vs-nogil-vs-multiprocessing , https://www.youtube.com/live/fyOPTsm89Fk 5:22:13, TODO link to the video
+- Anthony Shaw, "Unlocking the Parallel Universe: Subinterpreters and Free-Threading in Python 3.13", https://us.pycon.org/2024/schedule/presentation/128/ , https://www.youtube.com/watch?v=lCjsy7tb420
+- Anthony Shaw, repo with gunicorn based web server, https://github.com/tonybaloney/subinterpreter-web
+- Samet Yaslan, "Python in Parallel", https://ep2024.europython.eu/session/python-in-parallel-sub-interpreters-vs-nogil-vs-multiprocessing , https://www.youtube.com/live/fyOPTsm89Fk 5:22:13, TODO link to the video, https://program.europython.eu/europython-2024/talk/8FKHES/
 - Hugo van Kemenade, "Help us test free-threaded Python without the GIL", https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf
 - Łukasz Langa, The big leap of Python 3.13, https://www.youtube.com/watch?v=uL_kmagVKFQ
 - Łukasz Langa, Working Around the GIL with asyncio, https://www.youtube.com/watch?v=oVhJAVS3g00

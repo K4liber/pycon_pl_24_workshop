@@ -18,7 +18,7 @@
 - 2023 -> PEP 734 – Multiple Interpreters in the Stdlib
 - 2024 -> Python 3.13 released with Per-Interpreter GIL and free-threading
 
-### Part 3. Reference counting in CPython
+### Part 3. GIL -> simple solution for reference counting in CPython
 
 - Python (Python language specification, The Python Language Reference, Full Grammar specification) vs CPython
 
@@ -44,11 +44,12 @@ Python is defined partly by its documentation, and partly by its "reference impl
 - multiprocessing
 
 ### Part 5. Parallelism related concepts in Python
+(add the image with visualization similar to images/gil_place.png)
 
 - multiprocessing
-- web servers options: ASGI (gunicorn)/containers
-- (NEW in 3.13!) Per-interpreter GIL
-- (NEW in 3.13!) Free Threading (https://docs.python.org/3.13/howto/free-threading-extensions.html)
+- web server with multi-workers: ASGI (gunicorn)
+- (NEW in 3.13!) Per-interpreter GIL (subinterpreters)
+- (NEW in 3.13!) Free threading - multi-threading without GIL (https://docs.python.org/3.13/howto/free-threading-extensions.html)
 
 ### Part 6. Prepare python environments
 
