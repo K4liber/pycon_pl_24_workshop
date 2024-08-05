@@ -1,10 +1,11 @@
 ## Multi-core processing in Python using Per-interpreter GIL
 
 ### Part 1. Concurrency vs parallelism
-(slides)
-...
+
+(TODO slides)
 
 ### Part 2. Timeline in CPython parallelism context
+
 (background timeline on each slide in this part)
 - 1991 -> Initial release on Python
 - 1997 -> CPython users can run multiple interpreters in the same process (https://docs.python.org/3/c-api/init.html#sub-interpreter-support)
@@ -17,7 +18,8 @@
 - 2023 -> PEP 734 – Multiple Interpreters in the Stdlib
 - 2024 -> Python 3.13 released with Per-Interpreter GIL and free-threading
 
-(slides)
+### Part 3. Reference counting in CPython
+
 - Python (Python language specification, The Python Language Reference, Full Grammar specification) vs CPython
 
 Python is defined partly by its documentation, and partly by its "reference implementation" called CPython. 
@@ -26,22 +28,30 @@ Python is defined partly by its documentation, and partly by its "reference impl
 - GIL
 -- ease of programming vs performance
 -- dynamic types -> slow execution
--- automation of memory management (reference count) -> GIL
-- GIL free implementations (PyPy, IronPython)
+-- automation of memory management (reference counting) -> GIL
+- GIL free implementations (PyPy, IronPython) -> how those impelmentation exist without reference counting?
+
+"The garbage collectors used or implemented by PyPy are not based on reference counting, so the objects are not freed instantly when they are no longer reachable. The most obvious effect of this is that files (and sockets, etc) are not promptly closed when they go out of scope. For files that are opened for writing, data can be left sitting in their output buffers for a while, making the on-disk file appear empty or truncated. Moreover, you might reach your OS’s limit on the number of concurrently opened files."
+
+-> Once more, GIL prevent a developer to care about some aspects of memory management described above.
+
 - python 3.11 -> 3.12 GIL relocation (image gil_place.png, subinterpreters.png)
 
-### Part 3. Concurrency in Python
+### Part 4. Concurrency in Python
+
 - multithreading
 - asyncio
 - multiprocessing
 
-### Part 4. Parallelism related concepts in Python
+### Part 5. Parallelism related concepts in Python
+
 - multiprocessing
 - web servers options: ASGI (gunicorn)/containers
 - (NEW in 3.13!) Per-interpreter GIL
 - (NEW in 3.13!) Free Threading (https://docs.python.org/3.13/howto/free-threading-extensions.html)
 
-### Part 5. Prepare python environments
+### Part 6. Prepare python environments
+
 - `python 3.12.4`
 -- try with miniconda
 -- check on windows (checked -> works), ubuntu (not yet), mac os (not yet)
@@ -54,7 +64,7 @@ Python is defined partly by its documentation, and partly by its "reference impl
 ```
 git clone https://github.com/K4liber/cpython
 git checkout 3.13.0b3
-./configure --with-pydebug --disable-gil
+./configure --disable-gil --enable-optimizations
 make clean
 make
 ./python -c "import sysconfig; print(sysconfig.get_config_var('Py_GIL_DISABLED'))"
@@ -66,10 +76,11 @@ make
 git clone https://github.com/K4liber/subinterpreters
 conda env create
 ```
-### Part 6. Exercieses
 
-### 1. GIL - reference count on a shared state
-### 2. GIL - illusional thread safety
-### GIL disabled (py3.13t) (TODO simple zadanko)
-### Desktop application (threads, multiprocessing, subinterpreters)
-### Web server (threads, multiprocessing, subinterpreters) (FastAPI, single process ASGI unicorn)
+### Part 7. Exercieses
+
+#### 1. GIL - reference count on a shared state
+#### 2. GIL - illusional thread safety
+#### 3. GIL disabled (python 3.13  --disable-gil)
+#### (TODO) Desktop application (threads, multiprocessing, subinterpreters)
+#### (TODO) Web server (threads, multiprocessing, subinterpreters) (FastAPI, single process ASGI unicorn)

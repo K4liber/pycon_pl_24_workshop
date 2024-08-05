@@ -2,6 +2,6 @@
 - python3.13 GIL disabled exercise (week 1)
 - Desktop app exerciese (week 2)
 - webserver exercise (think through the Anthony code and create exercise based on that or a completely new one) (week 2)
-- exercies 1_GIL and 2_GIL created from the scripts (+2 exerices full prepeared) (week 3)
+- make a declaration of a simple unit test to be implemeneted/finished by a participant in each exercise (week 3)
 - make sure we have instructions to create python environments on all operating systems (week 3)
 - finish the presentation (week 4)

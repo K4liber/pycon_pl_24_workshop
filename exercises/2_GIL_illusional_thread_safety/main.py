@@ -1,4 +1,8 @@
 """
+"Before any opcode is executed in the frame-evaluation
+loop, the GIL is acquired by the thread. Once the opcode has been executed, the
+GIL is released"
+
 import dis
 dis.dis(illusional_thread_safe_task)
 
