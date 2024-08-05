@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>presentation_title</title>
+  <link rel="icon" type="image/x-icon"
+    href="https://orstedcdn.azureedge.net/-/media/www/images/corp/graphics/icons/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/simple.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+  <link rel="preload" href="https://orstedcdn.azureedge.net/Assets_/dist/fonts/OrstedSans-Regular.woff2" as="font"
+    type="font/woff2" crossorigin="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" />
+  <style>
+    :root {
+      --main-bg-color: white;
+      --main-text-color: black;
+      --heading-color: #4099da;
+      --link-color: #4099da;
+    }
+
+    .reveal {
+      background-color: var(--main-bg-color);
+      color: var(--main-text-color);
+      font-family: "Orsted Sans", "Helvetica Neue", Arial, sans-serif !important;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3,
+    .reveal h4,
+    .reveal h5,
+    .reveal h6 {
+      color: var(--heading-color);
+      font-family: "Orsted Sans", "Helvetica Neue", Arial, sans-serif !important;
+    }
+
+    .reveal a {
+      color: var(--link-color);
+    }
+
+    .reveal .slide-background {
+      padding-bottom: 50px;
+    }
+
+    .reveal footer.footer {
+      position: absolute;
+      bottom: var(--r-block-margin);
+      left: var(--r-block-margin);
+      right: calc(var(--r-block-margin) + 2 * 3.6em);
+      height: var(--r-main-font-size);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      font-size: calc(var(--r-main-font-size) * 0.4);
+    }
+
+    .reveal footer.footer img {
+      height: var(--r-main-font-size);
+      width: auto;
+      object-fit: contain;
+    }
+
+    @media print {
+      .reveal .footer {
+        position: fixed;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <footer class="footer">
+      <a href="https://orsted.com">
+        <img src="https://orstedcdn.azureedge.net/-/media/www/images/corp/graphics/icons/favicon.ico" alt="Orsted logo">
+      </a>
+      <span>Kamila Smolinska, Jan Bielecki, Multi-core processing in Python using Per-interpreter GIL, 29.08.2024</span>
+    </footer>
+    <div class="slides">
+      <section>
+        <h3>Multi-core processing in Python using Per-interpreter GIL</h3>
+        <p>PyCon Gliwice</p>
+      </section>
+      <section>
+        <h4>About presenters:</h4>
+        <div style="column-count: 4;">
+          <div style="text-align: left">
+            <p>Kamila Smolinska</p>
+          </div>
+          <img src="https://confreg-media-s3.s3.sbg.io.cloud.ovh.net/media/authors/profile21.png">
+          <div style="text-align: left">
+            <p>Jan Bielecki</p>
+          </div>
+          <img src="https://confreg-media-s3.s3.sbg.io.cloud.ovh.net/media/authors/441255849_3731468253792659_2789209670117535857_n.jpg">
+      </section>
+
+      <section>
+        <h3>Concurrency vs parallelism</h3>
+        <p>This is the paragraph.</p>
+        <ol>
+          <li>List element 1</li>
+          <li>List element 2</li>
+        </ol>
+        <pre><code data-trim data-noescape class="language-python">
+# Example code
+def example_function():
+    pass
+        </code></pre>
+        <aside class="notes">
+          These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+          <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+        </aside>
+      </section>
+
+      <section>
+        <section>
+          <h3>Timeline in CPython parallelism context</h3>
+          <p>Initial release on Python</p>
+            <div style="text-align: right">
+            <img style="height: 10em;" data-src="_assets\_images\t1.png" />
+            </div>
+        </section>
+        <section>
+            <p>CPython users can run multiple interpreters in the same process</p>
+            <div style="text-align: right">
+            <img style="height: 10em;" data-src="_assets\_images\t2.png" />
+            </div>
+        </section>
+        <section>
+          <p>the world’s first multicore processor "Power4"</p>
+          <div style="text-align: right">
+          <img style="height: 10em;" data-src="_assets\_images\t3.png" />
+        </div>
+        </section>
+        <section><p>Gilectomy, partially successful attempt to remove the GIL from CPython</p>
+          <div style="text-align: right">
+          <img style="height: 10em;" data-src="_assets\_images\t4.png" />
+        </div>
+        </section>
+        <section><p>PEP 554 – Multiple Interpreters in the Stdlib</p>
+          <div style="text-align: right">
+          <img style="height: 10em;" data-src="_assets\_images\t5.png" />
+        </div>
+      </section>
+        <section><p>PEP 684 – A Per-Interpreter GIL</p>
+          <div style="text-align: right">
+          <img style="height: 10em;" data-src="_assets\_images\t6.png" />
+        </div>
+      </section>
+        <section><p>PEP 703 – Making the Global Interpreter Lock Optional in CPython</p>
+          <div style="text-align: right">
+          <img style="height: 10em;" data-src="_assets\_images\t7.png" />
+        </div>
+      </section>
+        <section><p>PEP 734 – Multiple Interpreters in the Stdlib</p>
+          <div style="text-align: right">
+          <img style="height: 10em;" data-src="_assets\_images\t8.png" />
+        </div>
+      </section>
+        <section><p>Python 3.13 released with Per-Interpreter GIL and free-threading</p>
+          <div style="text-align: right">
+          <img style="height: 10em;" data-src="_assets\_images\t9.png" />
+        </div>
+      </section>
+      </section>
+
+      <!-- START OF MARKDOWN SLIDES -->
+      <section data-markdown>
+        <textarea data-template>
+### Part 3. Concurrency in Python
+- multithreading
+- asyncio
+- multiprocessing
+</textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+### Part 4. Parallelism related concepts in Python
+- multiprocessing
+- web servers options: ASGI (gunicorn)/containers
+- (NEW in 3.13!) Per-interpreter GIL
+- (NEW in 3.13!) Free Threading (https://docs.python.org/3.13/howto/free-threading-extensions.html)
+</textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+### Part 5. Prepare python environments
+- `python 3.12.4`
+-- try with miniconda
+-- check on windows (checked -> works), ubuntu (not yet), mac os (not yet)
+- `python 3.13.0b3` ([Free threaded python](https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf))
+</textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+#### Windows
+- download `Python 3.13.0b3` installer from https://www.python.org/downloads/windows/
+- why on JBIEL PC the CPUs were not been fully unitilized while running a command line version of fibonacci test (repo `subinterpreters`)? Test it again.
+- test the repo https://github.com/tonybaloney/subinterpreter-web . It does not work on Linux (after executing `make run` we get `Aborted (core dumped)`).
+</textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+#### Linux
+```
+git clone https://github.com/K4liber/cpython
+git checkout 3.13.0b3
+./configure --with-pydebug --disable-gil
+make clean
+make
+./python -c "import sysconfig; print(sysconfig.get_config_var('Py_GIL_DISABLED'))"
+./python -c "import sys; print(sys._is_gil_enabled())"
+./python -m venv <python_3.13_venv_path>
+```
+- python 3.12.4
+```
+git clone https://github.com/K4liber/subinterpreters
+conda env create
+```
+  </textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    ### Part 6. Exercieses
+  </textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    ### 1. GIL - reference count on a shared state
+  </textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    ### 2. GIL - illusional thread safety
+  </textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    ### GIL disabled (py3.13t)
+  </textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    ### Desktop application (threads, multiprocessing, subinterpreters)
+  </textarea>
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    ### Web server (threads, multiprocessing, subinterpreters) (FastAPI, single process ASGI unicorn)
+
+    </textarea>
+  </section>
+      <!-- END OF MARKDOWN SLIDES -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/markdown/markdown.min.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      plugins: [RevealHighlight, RevealNotes, RevealMarkdown]
+    });
+
+  </script>
+</body>
+
+</html>
