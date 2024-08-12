@@ -18,10 +18,14 @@ def make_request(request_id: int) -> str:
     print(f'Sending request (id={request_id}) to {url}')
     try:
         start_time = datetime.datetime.now()
-        response = requests.get(url).text
+        try:
+            response = requests.get(url)
+        except ConnectionError:
+            return "No connection could be made because the target machine actively refused."
+        response_text = response.text
         elapsed = datetime.datetime.now() - start_time
-        logger.info(f'Get response = {response}, elapsed = {elapsed.total_seconds():.2f}s.')
-        return response
+        logger.info(f'Get response = {response_text}, elapsed = {elapsed.total_seconds():.2f}s.')
+        return response_text
     except Exception as e:
         return str(e)
 
@@ -43,5 +47,6 @@ def execute_requests_concurrently(
 
 start_time = datetime.datetime.now()
 results = execute_requests_concurrently(max_workers=clients)
+print(results)
 elapsed = datetime.datetime.now() - start_time
 logger.info(f'{number_of_tasks} tasks executed in {elapsed.total_seconds():.2f}s')
