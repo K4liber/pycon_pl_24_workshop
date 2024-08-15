@@ -1,8 +1,4 @@
 """
-"Before any opcode is executed in the frame-evaluation
-loop, the GIL is acquired by the thread. Once the opcode has been executed, the
-GIL is released"
-
 import dis
 dis.dis(illusional_thread_safe_task)
 
@@ -20,6 +16,11 @@ dis.dis(illusional_thread_safe_task)
               SWAP                     2
               STORE_SUBSCR
               RETURN_CONST             0 (None)
+
+QUESTION:
+
+Why despite the presence of the GIL, the function "illusional_thread_safe_task" 
+might not behave as thread-safe when executed by multiple threads concurrently?
               
 """
 from concurrent.futures import ThreadPoolExecutor
@@ -49,11 +50,16 @@ def indeed_thread_safe_task() -> None:
 
 
 if __name__ == '__main__':
-    a = 1
+    n = 100
+    function_to_check = no_thread_safe_task
+
     with ThreadPoolExecutor(8) as executor:
-        for task_id in range(100):
-            executor.submit(no_thread_safe_task)
+        for task_id in range(n):
+            executor.submit(function_to_check)
 
         executor.shutdown(wait=True)
 
-    print(sum(value for value in _global_dict.values()))
+    actual_n = _global_dict[0]
+    print(f'expected = {n}, actual = {actual_n}')
+    assert actual_n == n, f'Your function {function_to_check} is not thread-safe!'
+    print(f'Seems like function {function_to_check} is thread-safe.')
