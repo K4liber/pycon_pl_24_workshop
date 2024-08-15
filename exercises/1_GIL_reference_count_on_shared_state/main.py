@@ -44,7 +44,7 @@ _parent = Parent(
 )
 
 
-def print_reference_count(obj: Any) -> int:
+def print_reference_count(obj: Any) -> None:
     print(f'{str(obj)} reference count: {sys.getrefcount(obj)}') 
 
 
@@ -56,6 +56,14 @@ def print_references(obj: Any) -> None:
             ref_name = str(ref)
 
         print(f'Ref {ref_index}: {ref_name}')
+
+
+def print_reference_summary(obj: Any) -> None:
+    print("----- Reference summary started -----")
+    print_reference_count(obj=obj)
+    print(f'\nReferences:\n')
+    print_references(obj=obj)
+    print("------ Reference summary ended -----")
 
 
 def create_child(name: str, parent: Parent) -> Child:
@@ -70,8 +78,11 @@ def create_child(name: str, parent: Parent) -> Child:
 
 
 if __name__ == '__main__':
+    print("\n----- Reference summary started -----\n")
     print_reference_count(obj=_parent)
+    print(f'\nReferences:\n')
     print_references(obj=_parent)
+    print("\n------ Reference summary ended -----\n")
     tasks = []
     children_names = [  # 12 children, thats a lot
         'Bob',
@@ -103,9 +114,8 @@ if __name__ == '__main__':
     for child in children:
         print(f'Hello {child.name} {child.parent.name}!')
 
-    for child in children:
-        del child
-    
-    del children
+    print("\n----- Reference summary started -----\n")
     print_reference_count(obj=_parent)
+    print(f'\nReferences:\n')
     print_references(obj=_parent)
+    print("\n------ Reference summary ended -----\n")
