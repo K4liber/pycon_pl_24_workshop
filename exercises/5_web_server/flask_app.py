@@ -22,9 +22,10 @@ def fibonacci(n: int) -> int:
     else:
         return fibonacci(n-1) + fibonacci(n-2)
 
-
 @app.route("/fibonacci")
-def get_fibonacci(n: int = 34) -> str:
+@app.route("/fibonacci/<n>")
+def get_fibonacci(n: int | str = 34) -> str:
+    n = int(n)
     thread_id = threading.get_native_id()
     process_id = os.getpid()
     start_time = datetime.datetime.now()
