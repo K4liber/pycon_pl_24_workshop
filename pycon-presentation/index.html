@@ -72,6 +72,66 @@
         position: fixed;
       }
     }
+
+    .timeline-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .timeline-content {
+      text-align: center;
+      width: 60%;
+      float: left;
+    }
+
+    .timeline-progress {
+      overflow: hidden;
+    }
+
+    .timeline-content-title {
+      text-align: center;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      margin: 5px 0;
+    }
+
+    .timeline-item {
+      position: relative;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 2px 2px;
+      margin: 8px 0;
+      width: 100px;
+      text-align: center;
+      z-index: 1;
+      font-size: 25px;
+      height: 30px;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      border-width: 8px 8px 0 8px;
+      border-color: #000000 transparent transparent transparent;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .timeline-item:first-child::after {
+        display: none;
+    }
+
+    .timeline-item-marked {
+      background-color:#4099da;
+    }
   </style>
 </head>
 
@@ -81,13 +141,20 @@
       <a href="https://orsted.com">
         <img src="https://orstedcdn.azureedge.net/-/media/www/images/corp/graphics/icons/favicon.ico" alt="Orsted logo">
       </a>
-      <span>Kamila Smolinska, Jan Bielecki, Multi-core processing in Python using Per-interpreter GIL, 29.08.2024</span>
+      <span>Multi-core processing in Python using Per-interpreter GIL, 29.08.2024</span>
     </footer>
     <div class="slides">
       <section>
         <h3>Multi-core processing in Python using Per-interpreter GIL</h3>
-        <p>PyCon Gliwice</p>
+        <p>PyCon'24 Gliwice</p>
       </section>
+
+      <section>
+        <h4>About Ørsted</h4>
+        <p>TODO</p>
+      </section>
+
+
       <section>
         <h4>About presenters:</h4>
         <div style="column-count: 4;">
@@ -102,17 +169,8 @@
       </section>
 
       <section>
-        <h3>Concurrency vs parallelism</h3>
-        <p>This is the paragraph.</p>
-        <ol>
-          <li>List element 1</li>
-          <li>List element 2</li>
-        </ol>
-        <pre><code data-trim data-noescape class="language-python">
-# Example code
-def example_function():
-    pass
-        </code></pre>
+        <h3>Concurrency vs parallelism [1]</h3>
+        <img style="height: 10em;" data-src="_assets\_images\concurrent.jpg" />
         <aside class="notes">
           These are your private notes for this slide. You can enable them by clicking `S` key. 📝
           <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
@@ -120,55 +178,227 @@ def example_function():
       </section>
 
       <section>
+        
         <section>
-          <h3>Timeline in CPython parallelism context</h3>
-          <p>Initial release on Python</p>
-            <div style="text-align: right">
-            <img style="height: 10em;" data-src="_assets\_images\t1.png" />
+          <h4>Timeline in CPython parallelism context</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
             </div>
-        </section>
-        <section>
-            <p>CPython users can run multiple interpreters in the same process</p>
-            <div style="text-align: right">
-            <img style="height: 10em;" data-src="_assets\_images\t2.png" />
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
             </div>
+          </div>
         </section>
+        
         <section>
-          <p>the world’s first multicore processor "Power4"</p>
-          <div style="text-align: right">
-          <img style="height: 10em;" data-src="_assets\_images\t3.png" />
-        </div>
+          <h4>Initial release on Python</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item timeline-item-marked">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
         </section>
-        <section><p>Gilectomy, partially successful attempt to remove the GIL from CPython</p>
-          <div style="text-align: right">
-          <img style="height: 10em;" data-src="_assets\_images\t4.png" />
-        </div>
+        
+        <section>
+          <h4>CPython users can run multiple interpreters in the same process</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item timeline-item-marked">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
         </section>
-        <section><p>PEP 554 – Multiple Interpreters in the Stdlib</p>
-          <div style="text-align: right">
-          <img style="height: 10em;" data-src="_assets\_images\t5.png" />
-        </div>
-      </section>
-        <section><p>PEP 684 – A Per-Interpreter GIL</p>
-          <div style="text-align: right">
-          <img style="height: 10em;" data-src="_assets\_images\t6.png" />
-        </div>
-      </section>
-        <section><p>PEP 703 – Making the Global Interpreter Lock Optional in CPython</p>
-          <div style="text-align: right">
-          <img style="height: 10em;" data-src="_assets\_images\t7.png" />
-        </div>
-      </section>
-        <section><p>PEP 734 – Multiple Interpreters in the Stdlib</p>
-          <div style="text-align: right">
-          <img style="height: 10em;" data-src="_assets\_images\t8.png" />
-        </div>
-      </section>
-        <section><p>Python 3.13 released with Per-Interpreter GIL and free-threading</p>
-          <div style="text-align: right">
-          <img style="height: 10em;" data-src="_assets\_images\t9.png" />
-        </div>
-      </section>
+        
+        <section>
+          <h4>The world’s first multicore processor "Power4"</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item timeline-item-marked">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4>Gilectomy, partially successful attempt to remove the GIL from CPython</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item timeline-item-marked">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4>PEP 554 – Multiple Interpreters in the Stdlib</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item timeline-item-marked">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <h4>PEP 684 – A Per-Interpreter GIL</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item timeline-item-marked">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4>PEP 703 – Making the Global Interpreter Lock Optional in CPython</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item timeline-item-marked">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4>PEP 734 – Multiple Interpreters in the Stdlib</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item timeline-item-marked">XI 2023</div>
+                <div class="timeline-item">X 2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4>Python 3.13 released with Per-Interpreter GIL and free-threading</h4>
+          <div class="timeline-wrapper">
+            <div class="timeline-content">
+              TODO
+            </div>
+            <div class="timeline-progress">
+              <div class="timeline">
+                <div class="timeline-item">II 1991</div>
+                <div class="timeline-item">I 1998</div>
+                <div class="timeline-item">X 2001</div>
+                <div class="timeline-item">V 2016</div>
+                <div class="timeline-item">IX 2017</div>
+                <div class="timeline-item">III 2022</div>
+                <div class="timeline-item">I 2023</div>
+                <div class="timeline-item">XI 2023</div>
+                <div class="timeline-item timeline-item-marked">X 2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </section>
 
       <!-- START OF MARKDOWN SLIDES -->
@@ -286,8 +516,11 @@ conda env create
 
 <section data-markdown>
   <textarea data-template>
-    ### Web server (threads, multiprocessing, subinterpreters) (FastAPI, single process ASGI unicorn)
-
+    ### Bibliography
+    <ol>
+      <li>[1] Introduction to Concurrency in Programming Languages, Matthew J. Sottile, Timothy G. Mattson, Craig E Rasmussen</li>
+      <li>[2] ...</li>
+    </ol>
     </textarea>
   </section>
       <!-- END OF MARKDOWN SLIDES -->

@@ -10,7 +10,7 @@
 - 1991 -> Initial release on Python
 - 1997 -> CPython users can run multiple interpreters in the same process (https://docs.python.org/3/c-api/init.html#sub-interpreter-support)
 - ...
-- 2001 -> the world’s first multicore processor "Power4"
+- 2001 -> The world’s first multicore processor "Power4"
 - 2016 -> Gilectomy, partially successful attempt to remove the GIL from CPython
 - 2017 -> PEP 554 – Multiple Interpreters in the Stdlib
 - 2022 -> PEP 684 – A Per-Interpreter GIL
