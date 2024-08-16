@@ -46,6 +46,5 @@ requests.get(f"{url}/1")
 
 start_time = datetime.datetime.now()
 results = execute_requests_concurrently(max_workers=clients)
-print(results)
 elapsed = datetime.datetime.now() - start_time
 logger.info(f'{number_of_tasks} tasks executed in {elapsed.total_seconds():.2f}s')
