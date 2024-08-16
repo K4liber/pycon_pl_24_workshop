@@ -3,7 +3,6 @@ import datetime
 import logging
 import requests
 
-
 url = "http://127.0.0.1:8000/fibonacci"
 number_of_tasks = 40
 clients = 8
@@ -18,10 +17,7 @@ def make_request(request_id: int) -> str:
     print(f'Sending request (id={request_id}) to {url}')
     try:
         start_time = datetime.datetime.now()
-        try:
-            response = requests.get(url)
-        except ConnectionError:
-            return "No connection could be made because the target machine actively refused."
+        response = requests.get(url)
         response_text = response.text
         elapsed = datetime.datetime.now() - start_time
         logger.info(f'Get response = {response_text}, elapsed = {elapsed.total_seconds():.2f}s.')
@@ -44,6 +40,9 @@ def execute_requests_concurrently(
             except Exception as exc:
                 results.append(str(exc))
     return results
+
+
+requests.get(f"{url}/1")
 
 start_time = datetime.datetime.now()
 results = execute_requests_concurrently(max_workers=clients)
