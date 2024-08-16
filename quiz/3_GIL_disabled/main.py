@@ -1,34 +1,24 @@
 """
-Another benchmark from ArjanCodes channel: https://www.youtube.com/watch?v=zWPe_CUR4yU
+Benchmark from ArjanCodes channel: https://www.youtube.com/watch?v=zWPe_CUR4yU
 source: https://github.com/ArjanCodes/examples/blob/main/2024/gil/main.py
 
-# TEST Linux 5.15.0-58-generic, Ubuntu 20.04.6 LTS
+QUESTION:
 
-Version of python: 3.12.0a7 (main, Oct  8 2023, 12:41:37) [GCC 9.4.0]
-GIL cannot be disabled
-Single-threaded: 78498 primes in 5.77 seconds
-Threaded: 78498 primes in 7.21 seconds
-Multiprocessed: 78498 primes in 3.23 seconds
+Run the script with both 1) python3.12 and 2) python3.13 with GIL disabled.
+What are your conclusions for each mode (single-threaded, multi-threaded, multiprocessed)?
 
-Version of python: 3.13.0b3 experimental free-threading build (heads/3.13.0b3:7b413952e8, Aug  3 2024, 14:47:48) [GCC 9.4.0]
-GIL is disabled
-Single-threaded: 78498 primes in 7.99 seconds
-Threaded: 78498 primes in 4.17 seconds
-Multiprocessed: 78498 primes in 4.40 seconds
 """
 
 import math
 import multiprocessing
+import os
 import sys
 import sysconfig
 import threading
 import time
 
-PYTHON_GIL = 1
 
-
-# A CPU-bound task: computing a large number of prime numbers
-def is_prime(n: int) -> bool:
+def _is_prime(n: int) -> bool:
     if n <= 1:
         return False
     for i in range(2, int(math.sqrt(n)) + 1):
@@ -38,11 +28,28 @@ def is_prime(n: int) -> bool:
 
 
 def count_primes(start: int, end: int) -> int:
+    """
+    A CPU-bound task: computing a large number of prime numbers.
+    """
     count = 0
     for i in range(start, end):
-        if is_prime(i):
+        if _is_prime(i):
             count += 1
     return count
+
+
+def fibonacci(n: int) -> int:
+    """
+    Another CPU-bound task.
+    """
+    if n < 0:
+        raise ValueError("Incorrect input")
+    elif n == 0:
+        return 0
+    elif n == 1 or n == 2:
+        return 1
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
 
 
 def threaded_count_primes(n: int, num_threads: int) -> int:
@@ -78,39 +85,36 @@ def multiprocess_count_primes(n: int, num_processes: int) -> int:
 
 
 def main() -> None:
-    # print(f"The GIL active: {sys._is_gil_enabled()}")
     print(f"Version of python: {sys.version}")
+    gil_disabled = sysconfig.get_config_vars().get("Py_GIL_DISABLED")
 
-    active = sysconfig.get_config_vars().get("Py_GIL_DISABLED")
-
-    if active is None:
-        print("GIL cannot be disabled")
-    if active == 0:
+    if gil_disabled is None:
+        print(f"GIL cannot be disabled for python {sys.version}")
+    if gil_disabled == 0:
         print("GIL is active")
-    if active == 1:
+    if gil_disabled == 1:
         print("GIL is disabled")
 
     N = 10**6
-    NUM_THREADS = 4
-    NUM_PROCESSES = 4
+    NUMBER_OF_WORKERS = os.cpu_count()
+    print(f'Counting primes up to {N} with {NUMBER_OF_WORKERS} workers')
 
     start_time = time.time()
     single_threaded_result = count_primes(0, N)
     single_threaded_time = time.time() - start_time
     print(
-        f"Single-threaded: {single_threaded_result} primes in {single_threaded_time:.2f} seconds"
+        f"single-threaded: {single_threaded_result} primes in {single_threaded_time:.2f} seconds"
     )
-
     start_time = time.time()
-    threaded_result = threaded_count_primes(N, NUM_THREADS)
+    threaded_result = threaded_count_primes(N, NUMBER_OF_WORKERS)
     threaded_time = time.time() - start_time
-    print(f"Threaded: {threaded_result} primes in {threaded_time:.2f} seconds")
+    print(f"multi-threaded: {threaded_result} primes in {threaded_time:.2f} seconds")
 
     start_time = time.time()
-    multiprocess_result = multiprocess_count_primes(N, NUM_PROCESSES)
+    multiprocess_result = multiprocess_count_primes(N, NUMBER_OF_WORKERS)
     multiprocess_time = time.time() - start_time
     print(
-        f"Multiprocessed: {multiprocess_result} primes in {multiprocess_time:.2f} seconds"
+        f"multiprocessed: {multiprocess_result} primes in {multiprocess_time:.2f} seconds"
     )
 
 
