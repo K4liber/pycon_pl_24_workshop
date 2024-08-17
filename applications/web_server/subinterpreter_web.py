@@ -52,7 +52,7 @@ class SubinterpreterWorker(threading.Thread):
     ):
         self.worker_number = number
         self.interp = interpreters.create()
-        self.channel = channels.create()
+        self.channel = channels.create(unboundop=1)
         self.config = config
         self.sockets = sockets
         self.log_level = log_level

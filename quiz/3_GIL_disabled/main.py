@@ -13,7 +13,6 @@ import math
 import multiprocessing
 import os
 import sys
-import sysconfig
 import threading
 import time
 
@@ -86,7 +85,10 @@ def multiprocess_count_primes(n: int, num_processes: int) -> int:
 
 def main() -> None:
     print(f"Version of python: {sys.version}")
-    gil_disabled = sysconfig.get_config_vars().get("Py_GIL_DISABLED")
+    gil_disabled = None
+
+    if hasattr(sys, '_is_gil_enabled'):
+        gil_disabled = not sys._is_gil_enabled()
 
     if gil_disabled is None:
         print(f"GIL cannot be disabled for python {sys.version}")
