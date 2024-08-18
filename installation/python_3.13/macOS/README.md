@@ -1,4 +1,4 @@
-# Create venv based on 3.12.5
+# Create venv based on 3.13
 
 - downlad from https://www.python.org/downloads/release/python-3125/ macOS 64-bit installer and drag and drop `python-3.13.0b2-macos11.pkg` file to `Application` folder and open it 
 
