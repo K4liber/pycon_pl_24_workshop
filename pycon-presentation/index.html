@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>presentation_title</title>
+  <title>Multi-core processing in Python using Per-interpreter GIL</title>
   <link rel="icon" type="image/x-icon"
     href="https://orstedcdn.azureedge.net/-/media/www/images/corp/graphics/icons/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
@@ -21,6 +21,10 @@
       --main-text-color: black;
       --heading-color: #4099da;
       --link-color: #4099da;
+    }
+
+    ol {
+      font-size: 50%;
     }
 
     .reveal {
@@ -144,6 +148,7 @@
       <span>Multi-core processing in Python using Per-interpreter GIL, 29.08.2024</span>
     </footer>
     <div class="slides">
+
       <section>
         <h3>Multi-core processing in Python using Per-interpreter GIL</h3>
         <p>PyCon'24 Gliwice</p>
@@ -153,7 +158,6 @@
         <h4>About Ørsted</h4>
         <p>TODO</p>
       </section>
-
 
       <section>
         <h4>About presenters:</h4>
@@ -169,7 +173,7 @@
       </section>
 
       <section>
-        <h3>Concurrency vs parallelism [1]</h3>
+        <h4>Concurrency vs parallelism [1]</h4>
         <img style="height: 10em;" data-src="_assets\_images\concurrent.jpg" />
         <aside class="notes">
           These are your private notes for this slide. You can enable them by clicking `S` key. 📝
@@ -400,130 +404,113 @@
         </section>
 
       </section>
+      
+      <section>
+        <section>
+          <h4>GIL enables thread-safe reference counting</h4>
+          TODO
+        </section>
 
-      <!-- START OF MARKDOWN SLIDES -->
-      <section data-markdown>
-        <textarea data-template>
-### Part 3. Concurrency in Python
-- multithreading
-- asyncio
-- multiprocessing
-</textarea>
-</section>
+        <section>
+          <h4>Python interpreter [2]</h4>
+          <img style="height: 14em;" data-src="_assets\_images\interpreter.jpg" />
+        </section>
 
-<section data-markdown>
-  <textarea data-template>
-### Part 4. Parallelism related concepts in Python
-- multiprocessing
-- web servers options: ASGI (gunicorn)/containers
-- (NEW in 3.13!) Per-interpreter GIL
-- (NEW in 3.13!) Free Threading (https://docs.python.org/3.13/howto/free-threading-extensions.html)
-</textarea>
-</section>
+        <section>
+          <h4>Ease of programming vs performance</h4>
+          TODO
+        </section>
 
-<section>
-  <section>
-    <h6>Multi-threading vs. multi-processing</h6>
-      <img style="height: 14em;" data-src="_assets\_images\mtmp.png" />
+        <section>
+          <h4>Reference counting: automation of memory management</h4>
+          TODO
+        </section>
 
-  </section>
-  <section>
-      <h6>Multi-processing vs. sub-interpreters</h6>
-      <img style="height: 14em;" data-src="_assets\_images\mps.png" />
-  </section>
-  <section>
-    <h6>Multi-threading vs. free-threading</h6>
-    <img style="height: 14em;" data-src="_assets\_images\mtft.png" />
-</section>
-<section>
-  <h6>Multi-processing vs. free-threading</h6>
-  <img style="height: 14em;" data-src="_assets\_images\mpft.png" />
-</section>
-<section>
-  <h6>Sub-interpreters vs. free-threading</h6>
-  <img style="height: 14em;" data-src="_assets\_images\sft.png" />
-</section>
-</section>
-<section data-markdown>
-  <textarea data-template>
-### Part 5. Prepare python environments
-- `python 3.12.4`
--- try with miniconda
--- check on windows (checked -> works), ubuntu (not yet), mac os (not yet)
-- `python 3.13.0b3` ([Free threaded python](https://dev.to/hugovk/help-us-test-free-threaded-python-without-the-gil-1hgf))
-</textarea>
-</section>
+        <section>
+          <h4>GIL free Python implementations (PyPy, IronPython) </h4>
+          "The garbage collectors used or implemented by PyPy are not based on reference counting, so the objects are not freed instantly when they are no longer reachable. The most obvious effect of this is that files (and sockets, etc) are not promptly closed when they go out of scope. For files that are opened for writing, data can be left sitting in their output buffers for a while, making the on-disk file appear empty or truncated. Moreover, you might reach your OS’s limit on the number of concurrently opened files."
 
-<section data-markdown>
-  <textarea data-template>
-#### Windows
-- download `Python 3.13.0b3` installer from https://www.python.org/downloads/windows/
-- why on JBIEL PC the CPUs were not been fully unitilized while running a command line version of fibonacci test (repo `subinterpreters`)? Test it again.
-- test the repo https://github.com/tonybaloney/subinterpreter-web . It does not work on Linux (after executing `make run` we get `Aborted (core dumped)`).
-</textarea>
-</section>
+        </section>
 
-<section data-markdown>
-  <textarea data-template>
-#### Linux
-```
-git clone https://github.com/K4liber/cpython
-git checkout 3.13.0b3
-./configure --with-pydebug --disable-gil
-make clean
-make
-./python -c "import sysconfig; print(sysconfig.get_config_var('Py_GIL_DISABLED'))"
-./python -c "import sys; print(sys._is_gil_enabled())"
-./python -m venv <python_3.13_venv_path>
-```
-- python 3.12.4
-```
-git clone https://github.com/K4liber/subinterpreters
-conda env create
-```
-  </textarea>
-</section>
+        <section>
+          <h4>GIL enables thread-safe reference counting</h4>
+          <img style="height: 13em;" data-src="_assets\_images\life_easier.jpg" />
+        </section>
+        
+      </section>
 
-<section data-markdown>
-  <textarea data-template>
-    ### Part 6. Exercieses
-  </textarea>
-</section>
+      <section >
+        <h4>Non-parallel concurrency in Python</h4>
+        <ul>
+          <li>multithreading</li>
+          <li>asyncio</li>
+        </ul>
+      </section>
 
-<section data-markdown>
-  <textarea data-template>
-    ### 1. GIL - reference count on a shared state
-  </textarea>
-</section>
+      <section>
+        <h4>Parallelel Python execution</h4>
+        <ul>
+          <li>multiprocessing</li>
+          <li>web server with multiple worker instances</li>
+          <li>(new in python 3.13) Per-interpreter GIL*</li>
+          <li>(new in python 3.13) Free Threading*</li>
+        </ul>
+        <br>
+        <br>
+        * - parallel execution in a single process
+      </section>
 
-<section data-markdown>
-  <textarea data-template>
-    ### 2. GIL - illusional thread safety
-  </textarea>
-</section>
+      <section>
+        <section>
+          <h6>Multi-threading vs. multi-processing</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mtmp.png" />
+        </section>
 
-<section data-markdown>
-  <textarea data-template>
-    ### GIL disabled (py3.13t)
-  </textarea>
-</section>
+        <section>
+          <h6>Multi-processing vs. sub-interpreters</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mps.png" />
+        </section>
 
-<section data-markdown>
-  <textarea data-template>
-    ### Desktop application (threads, multiprocessing, subinterpreters)
-  </textarea>
-</section>
+        <section>
+          <h6>Multi-threading vs. free-threading</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mtft.png" />
+        </section>
 
-<section data-markdown>
-  <textarea data-template>
-    ### Bibliography
-    <ol>
-      <li>[1] Introduction to Concurrency in Programming Languages, Matthew J. Sottile, Timothy G. Mattson, Craig E Rasmussen</li>
-      <li>[2] ...</li>
-    </ol>
-    </textarea>
-  </section>
-      <!-- END OF MARKDOWN SLIDES -->
+        <section>
+          <h6>Multi-processing vs. free-threading</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mpft.png" />
+        </section>
+
+        <section>
+          <h6>Sub-interpreters vs. free-threading</h6>
+          <img style="height: 14em;" data-src="_assets\_images\sft.png" />
+        </section>
+
+      </section>
+
+      <section>
+        <h4>Preparation of python environments</h4>
+        TODO
+      </section>
+
+      <section>
+        <h4>Quiz</h4>
+        TODO
+      </section>
+
+      <section>
+        <h4>Applications</h4>
+        TODO
+      </section>
+
+      <section>
+        <h4>Bibliography</h4>
+        <ol>
+          <li> Introduction to Concurrency in Programming Languages, Matthew J. Sottile, Timothy G. Mattson, Craig E Rasmussen</li>
+          <li> Python Interpreter - Introduction, JavaCafee, https://www.youtube.com/watch?v=VsjJfaUdFO8</li>
+        </ol>
+      </section>
+
     </div>
   </div>
 

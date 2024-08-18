@@ -18,7 +18,7 @@
 - 2023 -> PEP 734 – Multiple Interpreters in the Stdlib
 - 2024 -> Python 3.13 released with Per-Interpreter GIL and free-threading
 
-### Part 3. GIL -> simple solution for reference counting in CPython
+### Part 3. GIL enables thread-safe reference counting
 
 - Python (Python language specification, The Python Language Reference, Full Grammar specification) vs CPython
 
