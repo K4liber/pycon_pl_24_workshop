@@ -242,7 +242,7 @@
           <h4>CPython users can run multiple interpreters in the same process</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              TODO -> image with single process and GIL on the process, and multiple interpreters running from the process.
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -264,7 +264,10 @@
           <h4>The world’s first multicore processor "Power4"</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              <img style="height: 10em;" data-src="_assets\_images\power4.jpg" />
+              <div class="image-text">
+                Nowadays, single core processors are used in niche circumstances (Windows 98, Raspberry Pi, Single-board microcontrollers)
+              </div>
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -286,7 +289,10 @@
           <h4>Gilectomy, partially successful attempt to remove the GIL from CPython</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              <img style="height: 10em;" data-src="_assets\_images\knights.jpeg" />
+              <div class="image-text">
+                "Many brave knights have attempted to free ... threading"
+              </div>
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -308,7 +314,14 @@
           <h4>PEP 554 – Multiple Interpreters in the Stdlib</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              <img style="height: 6em;" data-src="_assets\_images\pep554.png" />
+              <div class="image-text">
+                <ul>
+                  <li>add a new stdlib module: “interpreters”</li>
+                  <li>add InterpreterPoolExecutor</li>
+                  <li>help for extension module maintainers</li>
+                </ul>
+              </div>
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -330,7 +343,14 @@
           <h4>PEP 684 – A Per-Interpreter GIL</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              <img style="height: 6em;" data-src="_assets\_images\pep684.png" />
+              <div class="image-text">
+                <ul>
+                  <li>stops sharing the GIL between interpreters, given sufficient isolation</li>
+                  <li>adds several new interpreter config options for isolation settings</li>
+                  <li>keeps incompatible extensions from causing problems</li>
+                </ul>
+              </div>
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -352,7 +372,8 @@
           <h4>PEP 703 – Making the Global Interpreter Lock Optional in CPython</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              <img style="height: 6em;" data-src="_assets\_images\pep703.png" />
+              <img style="height: 4em;" data-src="_assets\_images\free-threading-overhead.png" />
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -374,7 +395,10 @@
           <h4>PEP 734 – Multiple Interpreters in the Stdlib</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              <img style="height: 6em;" data-src="_assets\_images\pep734.png" />
+              <div class="image-text">
+                "This PEP is essentially a continuation of PEP 554. That document had grown a lot of ancillary information across 7 years of discussion. This PEP is a reduction back to the essential information. Much of that extra information is still valid and useful, just not in the immediate context of the specific proposal here."
+              </div>
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -393,10 +417,13 @@
         </section>
 
         <section>
-          <h4>Python 3.13 release with Per-Interpreter GIL and free-threading</h4>
+          <h4>Python with Per-Interpreter GIL and free-threading</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO
+              <img style="height: 8em;" data-src="_assets\_images\excited.jpg" />
+              <div class="image-text">
+                Python 3.13 will be released on October 1, 2024.
+              </div>
             </div>
             <div class="timeline-progress">
               <div class="timeline">
