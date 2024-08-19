@@ -26,11 +26,14 @@ might not behave as thread-safe when executed by multiple threads concurrently?
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 import time
+import pytest
 
-
-_global_dict: dict[int, int] = {
-    0: 0
-}
+@pytest.fixture
+def _global_dict():
+    _global_dict: dict[int, int] = {
+        0: 0
+    }
+    return _global_dict
 _lock = Lock()
 
 
@@ -63,3 +66,18 @@ if __name__ == '__main__':
     print(f'expected = {n}, actual = {actual_n}')
     assert actual_n == n, f'Your function {function_to_check} is not thread-safe!'
     print(f'Seems like function {function_to_check} is thread-safe.')
+
+def test_no_thread_safe_task_does_not_increment_global_dict_value_by_n(_global_dict):
+    n = 100
+    function_to_check = no_thread_safe_task
+
+    with ThreadPoolExecutor(8) as executor:
+        for task_id in range(n):
+            executor.submit(function_to_check)
+
+        executor.shutdown(wait=True)
+
+    actual_n = _global_dict[0]
+    print(f'expected = {n}, actual = {actual_n}')
+    is_function_thread_safe = actual_n == n
+    assert not is_function_thread_safe, f'Your function {function_to_check} is thread-safe but it should not be!'
