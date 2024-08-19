@@ -184,6 +184,89 @@
           <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
         </aside>
       </section>
+      
+      <section>
+        <section>
+          <h4>GIL enables thread-safe reference counting</h4>
+          TODO
+        </section>
+
+        <section>
+          <h4>Python interpreter [3]</h4>
+          <img style="height: 14em;" data-src="_assets\_images\interpreter.jpg" />
+        </section>
+
+        <section>
+          <h4>Ease of programming vs performance</h4>
+          TODO
+        </section>
+
+        <section>
+          <h4>Reference counting: automation of memory management</h4>
+          TODO
+        </section>
+
+        <section>
+          <h4>GIL free Python implementations (PyPy, IronPython) </h4>
+          "The garbage collectors used or implemented by PyPy are not based on reference counting, so the objects are not freed instantly when they are no longer reachable. The most obvious effect of this is that files (and sockets, etc) are not promptly closed when they go out of scope. For files that are opened for writing, data can be left sitting in their output buffers for a while, making the on-disk file appear empty or truncated. Moreover, you might reach your OS’s limit on the number of concurrently opened files."
+
+        </section>
+
+        <section>
+          <h4>GIL enables thread-safe reference counting</h4>
+          <img style="height: 13em;" data-src="_assets\_images\life_easier.jpg" />
+        </section>
+        
+      </section>
+
+      <section >
+        <h4>Non-parallel concurrency in Python</h4>
+        <ul>
+          <li>multithreading</li>
+          <li>asyncio</li>
+        </ul>
+      </section>
+
+      <section>
+        <h4>Parallelel Python execution</h4>
+        <ul>
+          <li>multiprocessing</li>
+          <li>web server with multiple worker instances</li>
+          <li>(new in python 3.13) Per-interpreter GIL*</li>
+          <li>(new in python 3.13) Free Threading*</li>
+        </ul>
+        <br>
+        <br>
+        * - parallel execution in a single process
+      </section>
+
+      <section>
+        <section>
+          <h6>Multi-threading vs. multi-processing</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mtmp.png" />
+        </section>
+
+        <section>
+          <h6>Multi-processing vs. sub-interpreters</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mps.png" />
+        </section>
+
+        <section>
+          <h6>Multi-threading vs. free-threading</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mtft.png" />
+        </section>
+
+        <section>
+          <h6>Multi-processing vs. free-threading</h6>
+          <img style="height: 14em;" data-src="_assets\_images\mpft.png" />
+        </section>
+
+        <section>
+          <h6>Sub-interpreters vs. free-threading</h6>
+          <img style="height: 14em;" data-src="_assets\_images\sft.png" />
+        </section>
+
+      </section>
 
       <section>
         
@@ -242,7 +325,10 @@
           <h4>CPython users can run multiple interpreters in the same process</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              TODO -> image with single process and GIL on the process, and multiple interpreters running from the process.
+              <img style="height: 10em;" data-src="_assets\_images\multiple-interpreters.png"/>
+              <div class="image-text">
+                GIL is still on the "process" level
+              </div>
             </div>
             <div class="timeline-progress">
               <div class="timeline">
@@ -439,89 +525,6 @@
               </div>
             </div>
           </div>
-        </section>
-
-      </section>
-      
-      <section>
-        <section>
-          <h4>GIL enables thread-safe reference counting</h4>
-          TODO
-        </section>
-
-        <section>
-          <h4>Python interpreter [3]</h4>
-          <img style="height: 14em;" data-src="_assets\_images\interpreter.jpg" />
-        </section>
-
-        <section>
-          <h4>Ease of programming vs performance</h4>
-          TODO
-        </section>
-
-        <section>
-          <h4>Reference counting: automation of memory management</h4>
-          TODO
-        </section>
-
-        <section>
-          <h4>GIL free Python implementations (PyPy, IronPython) </h4>
-          "The garbage collectors used or implemented by PyPy are not based on reference counting, so the objects are not freed instantly when they are no longer reachable. The most obvious effect of this is that files (and sockets, etc) are not promptly closed when they go out of scope. For files that are opened for writing, data can be left sitting in their output buffers for a while, making the on-disk file appear empty or truncated. Moreover, you might reach your OS’s limit on the number of concurrently opened files."
-
-        </section>
-
-        <section>
-          <h4>GIL enables thread-safe reference counting</h4>
-          <img style="height: 13em;" data-src="_assets\_images\life_easier.jpg" />
-        </section>
-        
-      </section>
-
-      <section >
-        <h4>Non-parallel concurrency in Python</h4>
-        <ul>
-          <li>multithreading</li>
-          <li>asyncio</li>
-        </ul>
-      </section>
-
-      <section>
-        <h4>Parallelel Python execution</h4>
-        <ul>
-          <li>multiprocessing</li>
-          <li>web server with multiple worker instances</li>
-          <li>(new in python 3.13) Per-interpreter GIL*</li>
-          <li>(new in python 3.13) Free Threading*</li>
-        </ul>
-        <br>
-        <br>
-        * - parallel execution in a single process
-      </section>
-
-      <section>
-        <section>
-          <h6>Multi-threading vs. multi-processing</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mtmp.png" />
-        </section>
-
-        <section>
-          <h6>Multi-processing vs. sub-interpreters</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mps.png" />
-        </section>
-
-        <section>
-          <h6>Multi-threading vs. free-threading</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mtft.png" />
-        </section>
-
-        <section>
-          <h6>Multi-processing vs. free-threading</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mpft.png" />
-        </section>
-
-        <section>
-          <h6>Sub-interpreters vs. free-threading</h6>
-          <img style="height: 14em;" data-src="_assets\_images\sft.png" />
         </section>
 
       </section>
