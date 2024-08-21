@@ -192,53 +192,9 @@
         </section>
 
         <section>
-          <h4>What is GIL (Global Interpreter Lock)?</h4>
-          <div>
-            <div style="width: 40%; float:left; font-size: 0.8em;">
-              <pre>
-                <code data-trim data-noescape class="language-python">
-                def update_dictionary(
-                    initial: dict[int, int]
-                  ) -> None:
-                  """
-                  This function just 
-                  add 1 to the value 
-                  under key 0 inside 
-                  provided dictionary.
-                  """
-                  initial[0] += 1
-                
-                import dis
-                dis.dis(update_dictionary)
-
-
-                </code>
-              </pre>
-            </div>
-            <div style="width: 60%; float:right; font-size: 0.7em;">
-              <pre>
-                <code data-trim data-noescape class="language-python">
-                  >>>
-
-                  41           RESUME                   0
-                 
-                  42           LOAD_FAST                0 (initial)
-                               LOAD_CONST               1 (0)
-                               COPY                     2
-                               COPY                     2
-                               BINARY_SUBSCR
-                               LOAD_CONST               2 (1)
-                               BINARY_OP               13 (+=)
-                               SWAP                     3
-                               SWAP                     2
-                               STORE_SUBSCR
-                               RETURN_CONST             0 (None)
-                </code>
-              </pre>
-            </div>
-          </div>
+          <h4>Garbage collection</h4>
           <div class="image-text" style="float: left;">
-            In essence, GIL is a mutex, a lock in CPython that allows only one thread at a time to execute Python bytecode.
+            TODO
           </div>
         </section>
 
@@ -294,6 +250,57 @@
             Reference counting is an automation of memory management.
           </div>
           
+        </section>
+
+        <section>
+          <h4>What is GIL (Global Interpreter Lock)?</h4>
+          <div>
+            <div style="width: 40%; float:left; font-size: 0.8em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                def update_dictionary(
+                    initial: dict[int, int]
+                  ) -> None:
+                  """
+                  This function just 
+                  add 1 to the value 
+                  under key 0 inside 
+                  provided dictionary.
+                  """
+                  initial[0] += 1
+                
+                import dis
+                dis.dis(update_dictionary)
+
+
+                </code>
+              </pre>
+            </div>
+            <div style="width: 60%; float:right; font-size: 0.7em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                  >>>
+
+                  41           RESUME                   0
+                 
+                  42           LOAD_FAST                0 (initial)
+                               LOAD_CONST               1 (0)
+                               COPY                     2
+                               COPY                     2
+                               BINARY_SUBSCR
+                               LOAD_CONST               2 (1)
+                               BINARY_OP               13 (+=)
+                               SWAP                     3
+                               SWAP                     2
+                               STORE_SUBSCR
+                               RETURN_CONST             0 (None)
+                </code>
+              </pre>
+            </div>
+          </div>
+          <div class="image-text" style="float: left;">
+            In essence, GIL is a mutex, a lock in CPython that allows only one thread at a time to execute Python bytecode.
+          </div>
         </section>
 
         <section>
