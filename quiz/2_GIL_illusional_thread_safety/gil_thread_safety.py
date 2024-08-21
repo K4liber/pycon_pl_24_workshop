@@ -35,15 +35,19 @@ _lock = Lock()
 
 
 def illusional_thread_safe_task() -> None:
+    """Non atomic operations."""
     _global_dict[0] += 1
 
 
 def no_thread_safe_task() -> None:
+    """Eye visible non atomic operations. 
+    During time sleep thread-switching occurs."""
     actual_value = _global_dict[0]
     time.sleep(0.001)  # Thread Switching
     _global_dict[0] = actual_value + 1
 
 
 def indeed_thread_safe_task() -> None:
+    """Lock mechanism"""
     with _lock:
         no_thread_safe_task()

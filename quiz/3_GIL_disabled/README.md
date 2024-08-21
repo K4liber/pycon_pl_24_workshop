@@ -137,5 +137,19 @@ It will be really great if it will be **accesible for the base language and the 
 ## How much will this affect you?
 
 
-
+# Questions
 Q1: What is Python bytecode?
+Q2: What is default Python interpreter? What it's name and what it does? 
+Q3: What is GIL?
+Q4: Why GIL exists?
+
+# TASK 1
+Analyze the code and run main with 
+A. `python3.12`
+B. `python3.13t`
+
+# TASK 2
+In the function `multiprocess_count_primes` fix return value. 
+Return value should be based on list of `multiprocessing.pool.ApplyResults` object. 
+
+Hint: `sum([result.get() for result in results])`

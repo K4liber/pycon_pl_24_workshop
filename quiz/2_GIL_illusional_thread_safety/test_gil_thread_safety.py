@@ -30,6 +30,7 @@ from gil_thread_safety import no_thread_safe_task
 
 @pytest.fixture
 def n():
+    """Constant for testing function n times."""
     return 100
 
 
