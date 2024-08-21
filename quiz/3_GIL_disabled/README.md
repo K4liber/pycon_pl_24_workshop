@@ -146,10 +146,15 @@ Q4: Why GIL exists?
 # TASK 1
 Analyze the code and run main with 
 A. `python3.12`
-B. `python3.13t`
+B. `python3.13t` with GIL disabled
+What are your conclusions for each mode (single-threaded, multi-threaded, multiprocessed)?
+
 
 # TASK 2
 In the function `multiprocess_count_primes` fix return value. 
 Return value should be based on list of `multiprocessing.pool.ApplyResults` object. 
 
 Hint: `sum([result.get() for result in results])`
+
+Benchmark from ArjanCodes channel: https://www.youtube.com/watch?v=zWPe_CUR4yU
+source: https://github.com/ArjanCodes/examples/blob/main/2024/gil/main.py

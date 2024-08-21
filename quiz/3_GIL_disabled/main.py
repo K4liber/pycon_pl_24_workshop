@@ -1,14 +1,3 @@
-"""
-Benchmark from ArjanCodes channel: https://www.youtube.com/watch?v=zWPe_CUR4yU
-source: https://github.com/ArjanCodes/examples/blob/main/2024/gil/main.py
-
-QUESTION:
-
-Run the script with both 1) python3.12 and 2) python3.13 with GIL disabled.
-What are your conclusions for each mode (single-threaded, multi-threaded, multiprocessed)?
-
-"""
-
 import math
 import multiprocessing
 import os
