@@ -184,37 +184,145 @@
           <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
         </aside>
       </section>
-      
+
       <section>
         <section>
-          <h4>GIL enables thread-safe reference counting</h4>
-          TODO
+          <h4>Python interpreter [3]</h4>
+          <img style="height: 10em;" data-src="_assets\_images\interpreter.jpg" />
         </section>
 
         <section>
-          <h4>Python interpreter [3]</h4>
-          <img style="height: 14em;" data-src="_assets\_images\interpreter.jpg" />
+          <h4>Garbage collection</h4>
+          <img style="height: 10em;" data-src="_assets\_images\garbage_collection.jpg" />
+          <div class="image-text" style="float: left;">
+            Garbage collection was invented by American computer scientist John McCarthy around 1959 to simplify manual memory management in Lisp.
+          </div>
+        </section>
+
+        <section>
+          <h4>What is reference counting?</h4>
+          <div>
+            <div style="width: 34%; float:left; font-size: 0.79em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                  @dataclass(frozen=True)
+                  class Person:
+                      name: str
+                  
+                  @dataclass(frozen=True)
+                  class Child(Person):
+                      parent: Person
+                  
+                  parent = Person(
+                      name='Alex'
+                  )
+                  child = Child(
+                      name='Michael',
+                      parent=parent
+                  )
+                </code>
+              </pre>
+            </div>
+            <div style="width: 66%; float:right; font-size: 0.71em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                  def print_references(obj: Any) -> None:
+                    """
+                    Pretty print references to the object.
+                    """
+                    for ref_index, ref in enumerate(gc.get_referrers(obj)):
+                        if isinstance(ref, dict) and '__name__' in ref:
+                            ref_name = ref['__name__']
+                        else:
+                            ref_name = str(ref)
+
+                        print(f'Ref {ref_index+1}: {ref_name}')
+
+                  print_references(obj=parent)
+
+                  >>>
+                  Ref 1: Child(name='Michael', parent=Person(name='Alex'))
+                  Ref 2: __main__
+                </code>
+              </pre>
+            </div>
+          </div>
+          <div class="image-text" style="float: left;">
+            Reference counting is an automation of memory management.
+          </div>
+          
+        </section>
+
+        <section>
+          <h4>What is GIL (Global Interpreter Lock)?</h4>
+          <div>
+            <div style="width: 40%; float:left; font-size: 0.8em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                def update_dictionary(
+                    initial: dict[int, int]
+                  ) -> None:
+                  """
+                  This function just 
+                  add 1 to the value 
+                  under key 0 inside 
+                  provided dictionary.
+                  """
+                  initial[0] += 1
+                
+                import dis
+                dis.dis(update_dictionary)
+
+
+                </code>
+              </pre>
+            </div>
+            <div style="width: 60%; float:right; font-size: 0.7em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                  >>>
+
+                  41           RESUME                   0
+                 
+                  42           LOAD_FAST                0 (initial)
+                               LOAD_CONST               1 (0)
+                               COPY                     2
+                               COPY                     2
+                               BINARY_SUBSCR
+                               LOAD_CONST               2 (1)
+                               BINARY_OP               13 (+=)
+                               SWAP                     3
+                               SWAP                     2
+                               STORE_SUBSCR
+                               RETURN_CONST             0 (None)
+                </code>
+              </pre>
+            </div>
+          </div>
+          <div class="image-text" style="float: left;">
+            In essence, GIL is a mutex, a lock in CPython that allows only one thread at a time to execute Python bytecode.
+          </div>
         </section>
 
         <section>
           <h4>Ease of programming vs performance</h4>
-          TODO
-        </section>
-
-        <section>
-          <h4>Reference counting: automation of memory management</h4>
-          TODO
+          <img style="height: 8em;" data-src="_assets\_images\pros-and-cons.jpeg"/>
+          <div class="image-text">
+            Without GIL we could have a better performance but we will pay for it by manual memory management.
+          </div>
         </section>
 
         <section>
           <h4>GIL free Python implementations (PyPy, IronPython) </h4>
-          "The garbage collectors used or implemented by PyPy are not based on reference counting, so the objects are not freed instantly when they are no longer reachable. The most obvious effect of this is that files (and sockets, etc) are not promptly closed when they go out of scope. For files that are opened for writing, data can be left sitting in their output buffers for a while, making the on-disk file appear empty or truncated. Moreover, you might reach your OS’s limit on the number of concurrently opened files."
-
+          <img style="height: 7em;" data-src="_assets\_images\pypy.png"/>
+          <div class="image-text">
+            "The garbage collectors used or implemented by PyPy are not based on reference counting, so the objects are not freed instantly when they are no longer reachable. The most obvious effect of this is that files (and sockets, etc) are not promptly closed when they go out of scope."
+          </div>
         </section>
 
         <section>
           <h4>GIL enables thread-safe reference counting</h4>
-          <img style="height: 13em;" data-src="_assets\_images\life_easier.jpg" />
+          <img style="height: 12em;" data-src="_assets\_images\life_easier.jpg" />
         </section>
         
       </section>
@@ -276,7 +384,7 @@
             <div class="timeline-content">
               <img style="height: 9em;" data-src="_assets\_images\cpython_parallelism.webp"/>
               <div class="image-text">
-                Visualization of paralleism within a single process using Python version up to 3.11 [2]
+                Visualization of paralleism using multi-threading in Python version up to 3.11 [2]
               </div>
             </div>
             <div class="timeline-progress">
@@ -325,9 +433,9 @@
           <h4>CPython users can run multiple interpreters in the same process</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
-              <img style="height: 10em;" data-src="_assets\_images\multiple-interpreters.png"/>
+              <img style="height: 8em;" data-src="_assets\_images\multiple-interpreters.png"/>
               <div class="image-text">
-                GIL is still on the "process" level
+                Originally, GIL was introduced in Python 1.5 on the "process" level as a solution to handle multi-threading and facilitate memory management.
               </div>
             </div>
             <div class="timeline-progress">
