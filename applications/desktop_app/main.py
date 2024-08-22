@@ -1,5 +1,8 @@
-from functools import partial
-import sys
+"""
+Enforce to run without GIL:
+
+python -Xgil=0 applications/desktop_app/main.py
+"""
 import time
 from typing import Any
 import config
@@ -8,19 +11,15 @@ from runner.factory import RUNNER_TYPE, get_runner
 
 from job.callables import get_callable, CALLABLES
 
-runner_type = \
-    sys.argv[1].upper() \
-    if len(sys.argv) > 1 \
-    else RUNNER_TYPE.THREAD
+runner_type = RUNNER_TYPE.THREAD
 runner = get_runner(runner_type=runner_type)
-selected_function = \
-    get_callable(sys.argv[2]) \
-    if len(sys.argv) > 2 \
-    else get_callable(CALLABLES.FIBONACCI)
-function_args = \
-    sys.argv[3:] \
-    if len(sys.argv) > 3 \
-    else [34]
+function_args = [34]
+selected_function = get_callable(
+    CALLABLES.FIBONACCI,
+    wrap=True,
+    args=function_args
+)
+
 
 def _callback(
         worker_id: int | None = None,
@@ -35,7 +34,7 @@ def _callback(
 start = time.time()
 runner.start(
     callables_list=[
-        partial(selected_function, *function_args)
+        selected_function
         for _ in range(config.NUMBER_OF_JOBS)
     ],
     callback=_callback
