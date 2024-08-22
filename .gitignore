@@ -4,3 +4,5 @@
 python3.12_venv
 python3.13t_venv
 python3.13_venv
+.vscode
+*.json

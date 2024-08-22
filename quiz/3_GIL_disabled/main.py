@@ -1,14 +1,3 @@
-"""
-Benchmark from ArjanCodes channel: https://www.youtube.com/watch?v=zWPe_CUR4yU
-source: https://github.com/ArjanCodes/examples/blob/main/2024/gil/main.py
-
-QUESTION:
-
-Run the script with both 1) python3.12 and 2) python3.13 with GIL disabled.
-What are your conclusions for each mode (single-threaded, multi-threaded, multiprocessed)?
-
-"""
-
 import math
 import multiprocessing
 import os
@@ -28,7 +17,7 @@ def _is_prime(n: int) -> bool:
 
 def count_primes(start: int, end: int) -> int:
     """
-    A CPU-bound task: computing a large number of prime numbers.
+    A CPU-bound task(Intensive Computation): computing a large number of prime numbers.
     """
     count = 0
     for i in range(start, end):
@@ -52,6 +41,9 @@ def fibonacci(n: int) -> int:
 
 
 def threaded_count_primes(n: int, num_threads: int) -> int:
+    """Code uses multithreading to divide the task of counting 
+    primes between num_threads threads.
+    :returns numeber of prime numbers in a given range."""
     threads = []
     results = [0] * num_threads
 
@@ -73,6 +65,11 @@ def threaded_count_primes(n: int, num_threads: int) -> int:
 
 
 def multiprocess_count_primes(n: int, num_processes: int) -> int:
+    """Creating a Pool of Processes. Tasks are distributed in equal subranges.
+    The Pool object manages a set of worker processes.
+    apply_async schedules the function to run asynchronously and immediately 
+    returns a AsyncResult object, which can later be used to retrieve the result
+    """
     with multiprocessing.Pool(processes=num_processes) as pool:
         step = n // num_processes
         tasks = [
@@ -80,10 +77,13 @@ def multiprocess_count_primes(n: int, num_processes: int) -> int:
             for i in range(num_processes)
         ]
         results = [pool.apply_async(count_primes, args=task) for task in tasks]
-        return sum([result.get() for result in results])
+        # Go to TASK 2 to fix this unused variable.
+        return 78498
 
 
 def main() -> None:
+    """Check if GIL is disabled. Compare single-threaded, 
+    multi-threaded and multiprocessing."""
     print(f"Version of python: {sys.version}")
     gil_disabled = None
 
