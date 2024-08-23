@@ -37,11 +37,11 @@ def fibonacci(n: int) -> int:
     elif n == 1 or n == 2:
         return 1
     else:
-        return fibonacci(n-1) + fibonacci(n-2)
+        return fibonacci(n - 1) + fibonacci(n - 2)
 
 
 def threaded_count_primes(n: int, num_threads: int) -> int:
-    """Code uses multithreading to divide the task of counting 
+    """Code uses multithreading to divide the task of counting
     primes between num_threads threads.
     :returns numeber of prime numbers in a given range."""
     threads = []
@@ -67,7 +67,7 @@ def threaded_count_primes(n: int, num_threads: int) -> int:
 def multiprocess_count_primes(n: int, num_processes: int) -> int:
     """Creating a Pool of Processes. Tasks are distributed in equal subranges.
     The Pool object manages a set of worker processes.
-    apply_async schedules the function to run asynchronously and immediately 
+    apply_async schedules the function to run asynchronously and immediately
     returns a AsyncResult object, which can later be used to retrieve the result
     """
     with multiprocessing.Pool(processes=num_processes) as pool:
@@ -82,12 +82,12 @@ def multiprocess_count_primes(n: int, num_processes: int) -> int:
 
 
 def main() -> None:
-    """Check if GIL is disabled. Compare single-threaded, 
+    """Check if GIL is disabled. Compare single-threaded,
     multi-threaded and multiprocessing."""
     print(f"Version of python: {sys.version}")
     gil_disabled = None
 
-    if hasattr(sys, '_is_gil_enabled'):
+    if hasattr(sys, "_is_gil_enabled"):
         gil_disabled = not sys._is_gil_enabled()
 
     if gil_disabled is None:
@@ -99,7 +99,7 @@ def main() -> None:
 
     N = 10**6
     NUMBER_OF_WORKERS = os.cpu_count()
-    print(f'Counting primes up to {N} with {NUMBER_OF_WORKERS} workers')
+    print(f"Counting primes up to {N} with {NUMBER_OF_WORKERS} workers")
 
     start_time = time.time()
     single_threaded_result = count_primes(0, N)

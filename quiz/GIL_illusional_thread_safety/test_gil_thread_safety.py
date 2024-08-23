@@ -23,31 +23,25 @@ Why despite the presence of the GIL, the function "illusional_thread_safe_task"
 might not behave as thread-safe when executed by multiple threads concurrently?
               
 """
-from threading import Lock
-import time
+
+import pytest
+from concurrent.futures import ThreadPoolExecutor
+from .gil_thread_safety import _global_dict
+from .gil_thread_safety import no_thread_safe_task
+from .gil_thread_safety import indeed_thread_safe_task
+
+@pytest.fixture
+def n():
+    """Constant for testing function n times."""
+    return 100
 
 
-_global_dict = {
-    0: 0
-}
+def test_thread_switching_in_shared_mutable_state_introduces_race_condition(n: int):
+    """Test thread switching in dictionary increment."""
+    with ThreadPoolExecutor(8) as executor:
+        for _ in range(n):
+            executor.submit(no_thread_safe_task)
 
-_lock = Lock()
-
-
-def illusional_thread_safe_task() -> None:
-    """Non atomic operations."""
-    _global_dict[0] += 1
-
-
-def no_thread_safe_task() -> None:
-    """Eye visible non atomic operations. 
-    During time sleep thread-switching occurs."""
-    actual_value = _global_dict[0]
-    time.sleep(0.001)  # Thread Switching
-    _global_dict[0] = actual_value + 1
-
-
-def indeed_thread_safe_task() -> None:
-    """Lock mechanism"""
-    with _lock:
-        no_thread_safe_task()
+        executor.shutdown(wait=True)
+    is_function_thread_safe = _global_dict[0] == n
+    assert not is_function_thread_safe

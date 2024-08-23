@@ -1,4 +1,5 @@
 import gc
+
 collected = gc.collect()
 # Check for garbage-collected objects
 print("Garbage objects:", collected)
@@ -7,6 +8,7 @@ print("Garbage objects:", collected)
 class MyClass:
     def __init__(self):
         self.ref = None
+
 
 # Create objects and a cycle
 a = MyClass()
