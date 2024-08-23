@@ -112,7 +112,7 @@ Why do we even care about the **difference single threaded versus mutli-threaded
 
 If you use **multit-processing module**,
 You can indeed use **multiple CPU cores** because you are creating **separate processes**, but each of these processes is going to have its **own Python interpreter**.
-(AND?? )
+
  
 And we can not really use multithreading here beacuse GIL prevent us from that.
 

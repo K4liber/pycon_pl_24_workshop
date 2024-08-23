@@ -23,13 +23,12 @@ Why despite the presence of the GIL, the function "illusional_thread_safe_task"
 might not behave as thread-safe when executed by multiple threads concurrently?
               
 """
+
 from threading import Lock
 import time
 
 
-_global_dict = {
-    0: 0
-}
+_global_dict = {0: 0}
 
 _lock = Lock()
 
@@ -40,7 +39,7 @@ def illusional_thread_safe_task() -> None:
 
 
 def no_thread_safe_task() -> None:
-    """Eye visible non atomic operations. 
+    """Eye visible non atomic operations.
     During time sleep thread-switching occurs."""
     actual_value = _global_dict[0]
     time.sleep(0.001)  # Thread Switching

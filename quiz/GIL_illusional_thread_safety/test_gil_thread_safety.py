@@ -23,10 +23,12 @@ Why despite the presence of the GIL, the function "illusional_thread_safe_task"
 might not behave as thread-safe when executed by multiple threads concurrently?
               
 """
+
 import pytest
 from concurrent.futures import ThreadPoolExecutor
 from gil_thread_safety import _global_dict
 from gil_thread_safety import no_thread_safe_task
+
 
 @pytest.fixture
 def n():
@@ -35,7 +37,7 @@ def n():
 
 
 def test_thread_switching_in_shared_mutable_state_introduces_race_condition(n: int):
-    """ Test thread switching in dictionary increment."""
+    """Test thread switching in dictionary increment."""
     with ThreadPoolExecutor(8) as executor:
         for _ in range(n):
             executor.submit(no_thread_safe_task)
