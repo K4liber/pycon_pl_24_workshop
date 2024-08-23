@@ -19,18 +19,29 @@ dis.dis(illusional_thread_safe_task)
 
 QUESTION:
 
-Why despite the presence of the GIL, the function "illusional_thread_safe_task" 
+Why despite the presence of the GIL, the function "illusional_thread_safe_task"
 might not behave as thread-safe when executed by multiple threads concurrently?
-              
+
 """
 
-from threading import Lock
 import time
-
+from threading import Lock
 
 _global_dict = {0: 0}
 
+
+def reset_global_dict() -> None:
+    """Reset global dictionary."""
+    _global_dict[0] = 0
+
+
 _lock = Lock()
+
+
+def indeed_thread_safe_task() -> None:
+    """Lock mechanism"""
+    with _lock:
+        no_thread_safe_task()
 
 
 def illusional_thread_safe_task() -> None:
@@ -44,9 +55,3 @@ def no_thread_safe_task() -> None:
     actual_value = _global_dict[0]
     time.sleep(0.001)  # Thread Switching
     _global_dict[0] = actual_value + 1
-
-
-def indeed_thread_safe_task() -> None:
-    """Lock mechanism"""
-    with _lock:
-        no_thread_safe_task()
