@@ -26,9 +26,9 @@ might not behave as thread-safe when executed by multiple threads concurrently?
 
 import pytest
 from concurrent.futures import ThreadPoolExecutor
-from gil_thread_safety import _global_dict
-from gil_thread_safety import no_thread_safe_task
-
+from .gil_thread_safety import _global_dict
+from .gil_thread_safety import no_thread_safe_task
+from .gil_thread_safety import indeed_thread_safe_task
 
 @pytest.fixture
 def n():

@@ -16,13 +16,12 @@ an allocated block of memory when no longer needed.
 
 
 # TASK 1
-Why function `sys.getrefcount` always include 2 references more than the actual references we can get from function `gc.get_referrers`? 
+Why function `sys.getrefcount` always include 2 references more than the actual references we can get from function `gc.get_referrers`?
 
 In summary, the primary difference comes from the fact that `sys.getrefcount` includes temporary references created during its own call, whereas `gc.get_referrers` does not.
 `sys.getrefcount(obj)`
 - includes all references to the object, including temporary references created by the function call itself.
-- The act of passing obj to `sys.getrefcount()` temporarily increments the reference count by 1, so the value returned by `sys.getrefcount(obj)`
-
+- The act of passing obj to `sys.getrefcount()`creates temporary reference to the passed object and it increments the reference count by 1
 # TASK 2
 import gc library and check how many references are collected
 Check using garbage collector `gc.collect()`?
