@@ -160,7 +160,10 @@
 
       <section>
         <h4>About Ørsted</h4>
-        <p>TODO</p>
+        <p>Ørsted is the global-leader in offshore wind power, and supplies large-scale and cost-competitive offshore wind energy,
+          onshore wind energy, and solar energy solutions.
+          In parallel, Ørsted operates sustainable bioenergy plants,
+          offers renewable power purchase agreements, and is exploring renewable hydrogen solutions.</p>
       </section>
 
       <section>
@@ -327,16 +330,107 @@
         
       </section>
 
-      <section >
-        <h4>Non-parallel concurrency in Python</h4>
-        <ul>
-          <li>multithreading</li>
-          <li>asyncio</li>
-        </ul>
+      <section>
+        <section>
+          <h4>Models of (non-parallel) concurrency in Python</h4>
+          <img style="height: 10em;" data-src="_assets\_images\td.png" />
+          <div class="image-text" style="float: left;">
+            Life analogy of concurency.
+          </div>
+          <aside class="notes">
+            You are given two US in sprint for your projects development. You can concurrently solved them
+            in a given time frame. You can not work on them in parallel at the same time! Are U?
+            These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+            <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+          </aside>
+        </section>
+
+        <section>
+        <h4>Multi-threading</h4>
+        <img style="height: 15em;" data-src="_assets\_images\mt.png" />
+        <aside class="notes">
+          Multi-threading can improve the responsiveness and efficiency of applications, particularly for I/O-bound tasks, by allowing concurrent execution. However, it introduces complexity in terms of synchronization and debugging, and in CPython, the GIL limits its effectiveness for CPU-bound tasks.
+          These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+          <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+        </aside>
+        </section>
+
+        <section>
+          <h4>Asyncio</h4>
+
+          <div style="width: 66%; font-size: 0.71em;">
+            <pre>
+              <code data-trim data-noescape class="language-python">
+                async def download_many():
+                  await asyncio.gather(
+                    get_one("http://a.com/dl=f1", "f1.zip"),
+                    get_one("http://a.com/dl=f1", "f1.zip"),
+                    get_one("http://a.com/dl=f1", "f1.zip"),
+                  )
+              </code>
+            </pre>
+            <div class="image-text" >
+              Is this execution parallel?
+            </div>
+          </div>
+
+
+          <aside class="notes">
+            Is it parallel ? Yes, (should be) On the server side. On client side, it is concurent,
+            send three request in some time interval, but no in exact same time.
+            These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+            <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+          </aside>
+        </section>
+
+      </section>
+
+
+
+      <section>
+
+        <section>
+          <h4>Models of parallel (specific case of concurrency) Python execution</h4>
+          <img style="height: 10em;" data-src="_assets\_images\par.png" />
+          <div class="image-text" style="float: left;">
+            Life analogy of paralelism.
+          </div>
+        </section>
+
+        <section>
+          <h4>Multi-processing</h4>
+          <img style="height: 15em;" data-src="_assets\_images\mp.png" />
+          <aside class="notes">
+            Multiprocessing enables true parallelism and is effective for CPU-bound tasks, especially in CPython where it bypasses the GIL. However, it comes with higher overhead and complexity, particularly in managing inter-process communication and resource allocation.
+            These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+            <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+          </aside>
+          </section>
+
+          <section>
+            <h4>Per-Interpreter GIL (Subinterpreters)</h4>
+            <img style="height: 15em;" data-src="_assets\_images\SI.png" />
+            <aside class="notes">
+              Per-Interpreter GIL (subinterpreters) can significantly improve concurrency and isolation in Python applications but come with added complexity and potential compatibility issues. They are best suited for applications that can benefit from parallel execution and are designed to handle the intricacies of managing multiple interpreters.
+              These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+              <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+            </aside>
+            </section>
+
+            <section>
+              <h4> Free-Threading with GIL Disabled in Python 3.13</h4>
+              <img style="height: 15em;" data-src="_assets\_images\ft.png" />
+              <aside class="notes">
+                Disabling the GIL in Python 3.13 can enable true parallelism and improve performance for CPU-bound tasks, but it also introduces complexity and potential concurrency issues. Developers need to carefully manage thread safety and be aware of the trade-offs involved in using fine-grained locking mechanisms.
+                These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+                <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+              </aside>
+              </section>
+
       </section>
 
       <section>
-        <h4>Parallelel Python execution</h4>
+        <h4>Models of parallel (specific case of concurrency) Python execution</h4>
         <ul>
           <li>multiprocessing</li>
           <li>web server with multiple worker instances</li>
@@ -348,33 +442,6 @@
         * - parallel execution in a single process
       </section>
 
-      <section>
-        <section>
-          <h6>Multi-threading vs. multi-processing</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mtmp.png" />
-        </section>
-
-        <section>
-          <h6>Multi-processing vs. sub-interpreters</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mps.png" />
-        </section>
-
-        <section>
-          <h6>Multi-threading vs. free-threading</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mtft.png" />
-        </section>
-
-        <section>
-          <h6>Multi-processing vs. free-threading</h6>
-          <img style="height: 14em;" data-src="_assets\_images\mpft.png" />
-        </section>
-
-        <section>
-          <h6>Sub-interpreters vs. free-threading</h6>
-          <img style="height: 14em;" data-src="_assets\_images\sft.png" />
-        </section>
-
-      </section>
 
       <section>
         
