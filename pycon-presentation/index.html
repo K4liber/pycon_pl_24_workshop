@@ -408,6 +408,59 @@
           </section>
 
           <section>
+            <h4>Example of multi-processing</h4>
+            <img style="height: 10em;" data-src="_assets\_images\web.png" />
+            <div class="image-text" style="float: left;">
+              Visualization of web server with multiple worker instances .
+            </div>
+            <aside class="notes">
+              Visualization of the Process:
+              Main Process: Starts the main script and creates multiple worker processes.
+              Worker Processes: Each worker process runs an instance of the Flask web server.
+              Client Requests: Incoming client requests are handled by different worker processes.
+
+              This setup allows the web server to handle multiple requests concurrently by distributing them across multiple worker processes.
+
+              These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+              <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+            </aside>
+            </section>
+
+            <section>
+              <h4>Example of  Multi-Processing in black</h4>
+    
+              <div style="width: 66%; font-size: 0.71em;">
+                <pre>
+                  <code data-trim data-noescape class="language-python">
+                    from concurrent.futures import ProcessPoolExecutor
+
+                    def format_file(file_path):
+                        # Code to format a single file
+                        pass
+                    
+                    file_paths = ["file1.py", "file2.py", "file3.py"]
+                    
+                    with ProcessPoolExecutor() as executor:
+                        executor.map(format_file, file_paths)
+                  </code>
+                </pre>
+                <div class="image-text" >
+                  Is this execution parallel?
+                </div>
+              </div>
+    
+    
+              <aside class="notes">
+                Key Points:
+                Concurrent Processing: black uses the concurrent.futures.ProcessPoolExecutor to format multiple files in parallel, leveraging multiple CPU cores.
+                No asyncio: black does not use asyncio for asynchronous programming as its primary task (code formatting) is CPU-bound rather than I/O-bound.
+                This approach allows black to efficiently format multiple files concurrently, improving performance on large codebases.
+                These are your private notes for this slide. You can enable them by clicking `S` key. 📝
+                <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+              </aside>
+            </section>
+
+          <section>
             <h4>Per-Interpreter GIL (Subinterpreters)</h4>
             <img style="height: 15em;" data-src="_assets\_images\SI.png" />
             <aside class="notes">
@@ -426,21 +479,6 @@
                 <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
               </aside>
               </section>
-
-      </section>
-
-      <section>
-        <h4>Models of parallel (specific case of concurrency) Python execution</h4>
-        <ul>
-          <li>multiprocessing</li>
-          <li>web server with multiple worker instances</li>
-          <li>(new in python 3.13) Per-interpreter GIL*</li>
-          <li>(new in python 3.13) Free Threading*</li>
-        </ul>
-        <br>
-        <br>
-        * - parallel execution in a single process
-      </section>
 
 
       <section>
