@@ -2,10 +2,13 @@ import concurrent.futures
 import datetime
 import logging
 import requests
+import urllib.parse
 
-url = "http://127.0.0.1:8000/fibonacci"
+
+server_url = 'http://127.0.0.1:8000'
+url = urllib.parse.urljoin(server_url, 'fibonacci')
 number_of_tasks = 40
-clients = 8
+clients = 20
 logging.basicConfig(
     format='%(levelname)s: %(message)s',
 )
@@ -16,11 +19,9 @@ logger.setLevel(logging.INFO)
 def make_request(request_id: int) -> str:
     print(f'Sending request (id={request_id}) to {url}')
     try:
-        start_time = datetime.datetime.now()
         response = requests.get(url)
         response_text = response.text
-        elapsed = datetime.datetime.now() - start_time
-        logger.info(f'Get response = {response_text}, elapsed = {elapsed.total_seconds():.2f}s.')
+        logger.info(f'Get response = {response_text}.')
         return response_text
     except Exception as e:
         return str(e)
@@ -42,8 +43,9 @@ def execute_requests_concurrently(
     return results
 
 
-requests.get(f"{url}/1")
-
+response = requests.get(urllib.parse.urljoin(server_url, 'sys_info'))
+server_info = response.text
+logger.info(f"Testing server: {server_info}")
 start_time = datetime.datetime.now()
 results = execute_requests_concurrently(max_workers=clients)
 elapsed = datetime.datetime.now() - start_time

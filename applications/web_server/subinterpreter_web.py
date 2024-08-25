@@ -1,14 +1,3 @@
-"""
-Testing on CPython3.13b1+
-
-Requires some recent patches from main.
-pip install hypercorn
-
-Have successfully run the following apps:
-- fastapi==0.99.0
-- Flask
-"""
-
 from time import sleep, time
 import _interpreters as interpreters
 import _interpchannels as channels
