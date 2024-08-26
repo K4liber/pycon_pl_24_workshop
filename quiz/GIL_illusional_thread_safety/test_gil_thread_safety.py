@@ -1,3 +1,5 @@
+# noqa: f401
+
 """
 import dis
 dis.dis(illusional_thread_safe_task)
@@ -19,16 +21,23 @@ dis.dis(illusional_thread_safe_task)
 
 QUESTION:
 
-Why despite the presence of the GIL, the function "illusional_thread_safe_task" 
+Why despite the presence of the GIL, the function "illusional_thread_safe_task"
 might not behave as thread-safe when executed by multiple threads concurrently?
-              
+
 """
 
-import pytest
 from concurrent.futures import ThreadPoolExecutor
-from .gil_thread_safety import _global_dict
-from .gil_thread_safety import no_thread_safe_task
-from .gil_thread_safety import indeed_thread_safe_task
+
+import pytest
+
+from .gil_thread_safety import (
+    _global_dict,
+    illusional_thread_safe_task,
+    indeed_thread_safe_task,
+    no_thread_safe_task,
+    reset_global_dict,
+)
+
 
 @pytest.fixture
 def n():
@@ -36,12 +45,19 @@ def n():
     return 100
 
 
-def test_thread_switching_in_shared_mutable_state_introduces_race_condition(n: int):
+@pytest.mark.parametrize(
+    "func", [indeed_thread_safe_task, illusional_thread_safe_task, no_thread_safe_task]
+)
+def test_thread_switching_in_shared_mutable_state_introduces_race_condition(
+    n: int, func
+):
     """Test thread switching in dictionary increment."""
+    reset_global_dict()
     with ThreadPoolExecutor(8) as executor:
         for _ in range(n):
-            executor.submit(no_thread_safe_task)
+            executor.submit(func)
 
         executor.shutdown(wait=True)
     is_function_thread_safe = _global_dict[0] == n
-    assert not is_function_thread_safe
+
+    assert is_function_thread_safe, f"{_global_dict[0]}, {n}"
