@@ -1,7 +1,7 @@
 Exercise based on subinterpreter web server implementation by Anthony Shaw
 (https://github.com/tonybaloney/subinterpreter-web)
 
-### I. Turn on selected webserver ()
+### I. Turn on selected webserver
 
 (please change current working directory to `applications/web_server`)
 

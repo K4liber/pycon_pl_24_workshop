@@ -16,7 +16,7 @@
 - check if GIL enabled in default (should print "True"):  
 `python3.13_venv/bin/python -c "import sys; print(sys._is_gil_enabled())"`
 - install requirements:  
-`python3.13_venv/bin/python -m pip install -r installation/linux/requirements.txt`
+`python3.13_venv/bin/python -m pip install -r installation/requirements.txt`
 
 ### python3.13t_venv
 
@@ -36,4 +36,4 @@
 - check if GIL enabled while providing `Xgil=1` flag (should print "True"):  
 `python3.13t_venv/bin/python -Xgil=1 -c "import sys; print(sys._is_gil_enabled())"`
 - install requirements:  
-`python3.13t_venv/bin/python -m pip install -r installation/linux/requirements.txt`
+`python3.13t_venv/bin/python -m pip install -r installation/requirements.txt`
