@@ -3,7 +3,6 @@ from functools import partial
 import os
 from typing import Any, Callable
 
-from env import ENV
 from task.fibonacci import fibonacci
 
 
@@ -16,12 +15,9 @@ class _Callables:
 CALLABLES = _Callables()
 
 _name_to_callable  = {
-    CALLABLES.FIBONACCI: fibonacci
+    CALLABLES.FIBONACCI: fibonacci,
+    # CALLABLES.TEST_NUMPY: test_numpy
 }
-
-if not ENV.PYTHON_313:
-    from task.test_numpy import test_numpy
-    _name_to_callable[CALLABLES.TEST_NUMPY] = test_numpy
 
 
 def get_available_callables() -> list[str]:

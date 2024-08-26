@@ -31,6 +31,7 @@ def _callback(
         print(f'Worker id: {worker_id}, result: {result}')
 
 
+print(config.sys_info())
 start = time.time()
 runner.start(
     callables_list=[

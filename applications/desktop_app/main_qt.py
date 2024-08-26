@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Runner")
+        self.setWindowTitle(config.sys_info())
         self.setGeometry(0, 0, 400, 300)
         self._central_widget = QWidget()
         self._layout = QVBoxLayout()
@@ -106,11 +106,11 @@ class MainWindow(QMainWindow):
         timing_widget = QWidget()
         timing_widget.setFixedSize(400, 40)
         timing_layout = QHBoxLayout()
-        self._timing_init_label = QLabel('Initialization time [s]: ')
+        self._timing_init_label = QLabel('Initialization [s]: ')
         self._timing_init_label.setFixedSize(140, 20)
         self._timing_init_value = QLabel('-')
         self._timing_init_value.setFixedSize(40, 20)
-        self._timing_overall_label = QLabel('Overall time [s]: ')
+        self._timing_overall_label = QLabel('Overall [s]: ')
         self._timing_overall_label.setFixedSize(100, 20)
         self._timing_overall_value = QLabel('-')
         self._timing_overall_value.setFixedSize(40, 20)
@@ -240,6 +240,7 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == '__main__':
+    print(config.sys_info())
     app = QApplication([])
     window = MainWindow()
     window.show()

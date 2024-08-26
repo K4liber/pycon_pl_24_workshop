@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
 import config
-from env import ENV
 from runner.interface import RunnerInterface
 from runner.processes import RunnerProcesses
 from runner.threads import RunnerThreads
+from runner.subinterpreters import RunnerSubinterpreters
 
 
 @dataclass(frozen=True)
@@ -17,13 +17,9 @@ class _RunnerType:
 RUNNER_TYPE = _RunnerType()
 _runner_type_to_class = {
     RUNNER_TYPE.THREAD: RunnerThreads,
-    RUNNER_TYPE.PROCESS: RunnerProcesses
+    RUNNER_TYPE.PROCESS: RunnerProcesses,
+    RUNNER_TYPE.SUBINTERPRETER: RunnerSubinterpreters
 }
-
-if not ENV.PYTHON_313:
-    from runner.subinterpreters import RunnerSubinterpreters
-    _runner_type_to_class[RUNNER_TYPE.SUBINTERPRETER] = RunnerSubinterpreters
-
 
 def get_runner(
         runner_type: str

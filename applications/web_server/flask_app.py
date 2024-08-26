@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import sys
 import threading
 from flask import Flask
 
@@ -21,6 +22,18 @@ def fibonacci(n: int) -> int:
         return 1
     else:
         return fibonacci(n-1) + fibonacci(n-2)
+
+
+@app.route("/sys_info")
+def sys_info() -> str:
+    gil_disabled = False
+
+    if hasattr(sys, "_is_gil_enabled"):
+        gil_disabled = bool(not sys._is_gil_enabled())
+
+    gil_info = f'(GIL ' + ('disabled)' if gil_disabled else 'enabled)')
+    return f'{gil_info} {sys.version})'
+
 
 @app.route("/fibonacci")
 @app.route("/fibonacci/<n>")
