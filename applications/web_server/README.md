@@ -1,11 +1,10 @@
 Exercise based on subinterpreter web server implementation by Anthony Shaw
 (https://github.com/tonybaloney/subinterpreter-web)
 
-### I. Turn on webserver.
+### I. Turn on selected webserver
 
-- change current directory:  
-`cd applications/web_server`  
-- run selected web-server:   
+(please change current working directory to `applications/web_server`)
+
 1. multi-threads (please use python3.13_venv):
 ```
 python -m hypercorn -w1 flask_app:app
@@ -22,17 +21,16 @@ python subinterpreter_web.py -w 8 flask_app:app
 ```
 python -Xgil=0 -m hypercorn -w1 flask_app:app
 ```
-5. (optional) free-threading build with GIL enabled (please use python3.13t_venv and the flag -Xgil=1):  
+5. (optional) free-threading build with GIL enabled (please use python3.13t_venv and flag -Xgil=1):  
 ```
 python -Xgil=1 -m hypercorn -w1 flask_app:app
 ```
 
 ### II. Test sending multiple requests to the web-server under one case scenario
 
-Test the started server by running (use any python version >= 3.9):
-
+Test the started server by running (use any python version >= 3.9). Open new terminal and type:
 ```
-python test_web_server.py
+python applications/web_server/test_web_server.py
 ```
 
 ### III. Compare the results. Take a look at the PID/TID from the response text.
@@ -73,6 +71,37 @@ INFO: Testing server: (GIL enabled) 3.13.0rc1 experimental free-threading build 
 INFO: 40 tasks executed in 176.43s
 ```
 
+### Test results on macOS
+
+1. multi-threads
+```
+python -m hypercorn -w1 flask_app:app
+INFO: Testing server: (GIL enabled) 3.13.0rc1 (v3.13.0rc1:e4a3e786a5e, Jul 31 2024, 19:49:53) [Clang 15.0.0 (clang-1500.3.9.4)]) 
+INFO: 40 tasks executed in 41.72s
+```
+2. multiprocesses
+```
+python -m hypercorn -w8 flask_app:app
+INFO: Testing server: (GIL enabled) 3.13.0rc1 (v3.13.0rc1:e4a3e786a5e, Jul 31 2024, 19:49:53) [Clang 15.0.0 (clang-1500.3.9.4)])
+INFO: 40 tasks executed in 9.72s
+```
+3. subinterpreters 
+```
+python subinterpreter_web.py -w 8 flask_app:app
+INFO: Testing server: (GIL enabled) 3.13.0rc1 
+INFO: 40 tasks executed in 12.86s
+```
+4. free-threading
+```
+python -Xgil=0 -m hypercorn -w1 flask_app:app 
+INFO: Testing server: (GIL disabled) 3.13.0rc1 experimental free-threading build (v3.13.0rc1:e4a3e786a5e, Jul 31 2024, 19:57:27) [Clang 15.0.0 (clang-1500.3.9.4)])
+INFO: 40 tasks executed in 16.58s
+```
+5. free-threading build with GIL enabled
+```
+TODO
+```
+
 #### Test results on Windows
 ```
 Windows 10, 64-bit  
@@ -101,6 +130,7 @@ INFO: 40 tasks executed in 10.98s
 python.exe -Xgil=0 -m hypercorn -w1 flask_app:app
 Cannot import flask! What now?
 Test from `applications\desktop_app\main.py`:
+TODO
 ```
 5. free-threading build with GIL enabled
 ```
