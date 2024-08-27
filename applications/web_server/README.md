@@ -45,30 +45,35 @@ CPUs = 2
 python3.13 -m hypercorn -w1 flask_app:app
 INFO: Testing server: (GIL enabled) 3.13.0rc1 (tags/v3.13.0rc1:e4a3e78, Aug 24 2024, 10:36:31) [GCC 9.4.0])
 INFO: 40 tasks executed in 85.28s
+INFO: Overall memory usage: 37.125 [MB]
 ```
 2. multiprocesses
 ```
 python3.13 -m hypercorn -w8 flask_app:app
 INFO: Testing server: (GIL enabled) 3.13.0rc1 (tags/v3.13.0rc1:e4a3e78, Aug 24 2024, 10:36:31) [GCC 9.4.0])
 INFO: 40 tasks executed in 40.61s
+INFO: Overall memory usage: 290.98828125 [MB]
 ```
 3. subinterpreters
 ```
 python3.13 subinterpreter_web.py -w 8 flask_app:app
 INFO: Testing server: (GIL enabled) 3.13.0rc1 (tags/v3.13.0rc1:e4a3e78, Aug 24 2024, 10:36:31) [GCC 9.4.0])
 INFO: 40 tasks executed in 40.03s
+INFO: Overall memory usage: 0 [MB] (psutil error, but only a single process used)
 ```
 4. free-threading
 ```
 python3.13t -Xgil=0 -m hypercorn -w1 flask_app:app
 INFO: Testing server: (GIL disabled) 3.13.0rc1 experimental free-threading build (tags/v3.13.0rc1:e4a3e78, Aug 24 2024, 09:52:40) [GCC 9.4.0])
-INFO: 40 tasks executed in 67.69s
+INFO: 40 tasks executed in 60.47s
+INFO: Overall memory usage: 44.13671875 [MB]
 ```
 5. free-threading build with GIL enabled
 ```
 python3.13t -Xgil=1 -m hypercorn -w1 flask_app:app
 INFO: Testing server: (GIL enabled) 3.13.0rc1 experimental free-threading build (tags/v3.13.0rc1:e4a3e78, Aug 17 2024, 14:38:31) [GCC 9.4.0])
 INFO: 40 tasks executed in 176.43s
+INFO: Overall memory usage: 44.26953125 [MB]
 ```
 
 ### Test results on macOS
