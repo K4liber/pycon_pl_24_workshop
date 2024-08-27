@@ -66,7 +66,7 @@ INFO: 40 tasks executed in 67.69s
 ```
 5. free-threading build with GIL enabled
 ```
-python3.13t -m hypercorn -Xgil=1 -w1 flask_app:app
+python3.13t -Xgil=1 -m hypercorn -w1 flask_app:app
 INFO: Testing server: (GIL enabled) 3.13.0rc1 experimental free-threading build (tags/v3.13.0rc1:e4a3e78, Aug 17 2024, 14:38:31) [GCC 9.4.0])
 INFO: 40 tasks executed in 176.43s
 ```
@@ -99,7 +99,9 @@ INFO: 40 tasks executed in 16.58s
 ```
 5. free-threading build with GIL enabled
 ```
-TODO
+python -Xgil=1 -m hypercorn -w1 flask_app:app
+INFO: Testing server: (GIL enabled) 3.13.0rc1 experimental free-threading build 
+INFO: 40 tasks executed in 66.25s
 ```
 
 #### Test results on Windows
