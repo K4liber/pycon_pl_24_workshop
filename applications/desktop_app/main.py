@@ -41,4 +41,4 @@ runner.start(
     callback=_callback
 )
 end = time.time()
-print(f'Run time [s]: {end - start}')
+print(f'{config.NUMBER_OF_JOBS} tasks executed in {end - start} [s]')

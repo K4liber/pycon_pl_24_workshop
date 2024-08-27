@@ -130,9 +130,14 @@ INFO: 40 tasks executed in 10.98s
 python.exe -Xgil=0 -m hypercorn -w1 flask_app:app
 Cannot import flask! What now?
 Test from `applications\desktop_app\main.py`:
-TODO
+
+python.exe -Xgil=0 applications\desktop_app\main.py
+(GIL disabled) 3.13.0rc1 experimental free-threading build (tags/v3.13.0rc1:e4a3e78, Jul 31 2024, 21:06:58) [MSC v.1940 64 bit (AMD64)])
+40 tasks executed in 28.75843620300293 [s]
 ```
 5. free-threading build with GIL enabled
 ```
-TODO
+python.exe -Xgil=1 applications\desktop_app\main.py
+(GIL enabled) 3.13.0rc1 experimental free-threading build (tags/v3.13.0rc1:e4a3e78, Jul 31 2024, 21:06:58) [MSC v.1940 64 bit (AMD64)])
+40 tasks executed in 77.3057336807251 [s]
 ```

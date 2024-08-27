@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
 import os
 from typing import Any, Callable
-import psutil
 
 CALLBACK_TYPE = Callable[[int, Any, dict | None], Any]
 
@@ -31,7 +30,12 @@ class RunnerInterface(metaclass=ABCMeta):
         return self._runner_type
 
     @staticmethod
-    def get_memory_usage(pid: int | None = None) -> dict[int, float] | None:
+    def get_memory_usage(pid: int | None = None) -> dict[int, float | str] | None:
         pid = pid if pid is not None else os.getpid()
-        process = psutil.Process(pid=pid)
-        return {pid: process.memory_info().rss / 1024 ** 2}
+
+        try:
+            import psutil
+            process = psutil.Process(pid=pid)
+            return {pid: process.memory_info().rss / 1024 ** 2}
+        except ImportError:
+            return {pid: 'Unknown. "psutil" not installed'}
