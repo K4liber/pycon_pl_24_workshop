@@ -168,16 +168,18 @@
       </section>
 
       <section>
-        <h4>About presenters:</h4>
+        <h4>About presenters</h4>
         <div style="column-count: 4;">
           <div style="text-align: left">
-            <p>Kamila Smolinska</p>
+            <p>Kamila Smolińska</p>
+            <h6>Full-Stack Developer</h6>
           </div>
-          <img src="https://confreg-media-s3.s3.sbg.io.cloud.ovh.net/media/authors/profile21.png">
+          <img style="height: 6.5em;" data-src="_assets\_images\kamka.png" />
           <div style="text-align: left">
             <p>Jan Bielecki</p>
+            <h6>Full-Stack Developer</h6>
           </div>
-          <img src="https://confreg-media-s3.s3.sbg.io.cloud.ovh.net/media/authors/441255849_3731468253792659_2789209670117535857_n.jpg">
+          <img style="height: 6.5em;" data-src="_assets\_images\janek.png" />
       </section>
 
       <section>
@@ -636,7 +638,7 @@
           <div class="timeline-wrapper">
 
             <div class="timeline-content">
-              <img style="height: 8em;" data-src="_assets\_images\multiple-interpreters.png"/>
+              <img style="height: 8em;" data-src="_assets\_images\multiple-interpreters-312.png"/>
               <div class="image-text">
                 Stops sharing the GIL between interpreters, given sufficient isolation
               </div>
@@ -712,13 +714,90 @@
       </section>
 
       <section>
+        <section>
         <h4>Quiz</h4>
         Let's go to quiz folder.
+        </section>
+
+        <section>
+          <h4>Recall Global Interpreter Lock</h4>
+          <div>
+            <div style="width: 40%; float:left; font-size: 0.8em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                def update_dictionary(
+                    initial: dict[int, int]
+                  ) -> None:
+                  """
+                  This function just 
+                  add 1 to the value 
+                  under key 0 inside 
+                  provided dictionary.
+                  """
+                  initial[0] += 1
+                
+                import dis
+                dis.dis(update_dictionary)
+
+
+                </code>
+              </pre>
+            </div>
+            <div style="width: 60%; float:right; font-size: 0.7em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                  >>>
+
+                  41           RESUME                   0
+                 
+                  42           LOAD_FAST                0 (initial)
+                               LOAD_CONST               1 (0)
+                               COPY                     2
+                               COPY                     2
+                               BINARY_SUBSCR
+                               LOAD_CONST               2 (1)
+                               BINARY_OP               13 (+=)
+                               SWAP                     3
+                               SWAP                     2
+                               STORE_SUBSCR
+                               RETURN_CONST             0 (None)
+                </code>
+              </pre>
+            </div>
+          </div>
+          <div class="image-text" style="float: left;">
+            In essence, GIL is a mutex, a lock in CPython that allows only one thread at a time to execute Python bytecode.
+          </div>
+          <aside class="notes">
+            Thread A starts updating a dictionary dict with dict['key'] = value1.
+            Thread A is paused before completing the update due to a context switch.
+            Thread B starts and also attempts to update dict with dict['key'] = value2.
+            Thread B completes its update and is then paused.
+            Thread A resumes and completes its update, potentially overwriting the value set by Thread B. You can enable them by clicking `S` key. 📝
+            <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+          </aside>
+        </section>
+
       </section>
 
       <section>
+        <section>
         <h4>Applications</h4>
         Let's go to applications folder.
+      </section>
+      <section>
+        <h4>Web server task description</h4>
+        <img style="height: 9em;" data-src="_assets\_images\web.png" />
+      </section>
+      <section>
+        <h4>Web server tests summary</h4>
+        <div style="width: 50%; float:left; font-size: 0.9em;">
+        <img data-src="_assets\_images\app1.png" />
+        </div>
+        <div style="width: 50%; float:left; font-size: 0.9em;">
+        <img data-src="_assets\_images\app2.png" />
+      </div>
+      </section>
       </section>
 
       <section>
