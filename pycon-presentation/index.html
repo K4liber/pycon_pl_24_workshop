@@ -202,7 +202,10 @@
 
       <section>
         <section>
-          <h4>Python interpreter [3]</h4>
+          <img style="height: 11em;" data-src="_assets\_images\pi.png" />
+        </section>
+        <section>
+          <h4>Bytecode [3]</h4>
           <img style="height: 10em;" data-src="_assets\_images\interpreter.jpg" />
         </section>
 
@@ -238,9 +241,11 @@
                 </code>
               </pre>
             </div>
-            <div style="width: 66%; float:right; font-size: 0.71em;">
+            <div style="width: 66%; float:right; font-size: 0.64em;">
               <pre>
                 <code data-trim data-noescape class="language-python">
+                  import gc
+
                   def print_references(obj: Any) -> None:
                     """
                     Pretty print references to the object.
@@ -347,7 +352,7 @@
           <h4>Models of (non-parallel) concurrency in Python</h4>
           <img style="height: 10em;" data-src="_assets\_images\td.png" />
           <div class="image-text" style="float: left;">
-            Life analogy of concurency.
+            Life analogy of concurrency.
           </div>
           <aside class="notes">
             You are given two US in sprint for your projects development. You can concurrently solved them
@@ -381,11 +386,7 @@
                   )
               </code>
             </pre>
-            <div class="image-text" >
-              Is this execution parallel?
-            </div>
           </div>
-
 
           <aside class="notes">
             Is it parallel ? Yes, (should be) On the server side. On client side, it is concurent,
@@ -405,7 +406,7 @@
           <h4>Models of parallel (specific case of concurrency) Python execution</h4>
           <img style="height: 10em;" data-src="_assets\_images\par.png" />
           <div class="image-text" style="float: left;">
-            Life analogy of paralelism.
+            Life analogy of parallelism.
           </div>
         </section>
 
@@ -456,9 +457,6 @@
                         executor.map(format_file, file_paths)
                   </code>
                 </pre>
-                <div class="image-text" >
-                  Is this execution parallel?
-                </div>
               </div>
     
     
@@ -617,7 +615,7 @@
         </section>
 
         <section>
-          <h4>PEP 554 – Multiple Interpreters in the Stdlib</h4>
+          <h4>PEP 554 – Multiple Interpreters in the Stdlib [12]</h4>
           <div class="timeline-wrapper">
 
             <div class="timeline-content">
@@ -643,7 +641,7 @@
         </section>
         
         <section>
-          <h4>PEP 684 – A Per-Interpreter GIL</h4>
+          <h4>PEP 684 – A Per-Interpreter GIL [13]</h4>
           <div class="timeline-wrapper">
 
             <div class="timeline-content">
@@ -669,7 +667,7 @@
         </section>
 
         <section>
-          <h4>PEP 703 – Making the Global Interpreter Lock Optional in CPython</h4>
+          <h4>PEP 703 – Making the Global Interpreter Lock Optional in CPython [14]</h4>
           <div class="timeline-wrapper">
             <div class="timeline-content">
               <img style="height: 6em;" data-src="_assets\_images\pep703.png" />
@@ -718,8 +716,12 @@
 
       <section>
         <h4>Preparation of python environments</h4>
-        Let's go to https://github.com/K4liber/pycon_pl_24_workshop
-        /blob/main/installation/README.md
+        Let's go to 
+        <ul>
+          <li>https://shorturl.at/vHTpD</li>
+          <li>https://github.com/K4liber/pycon_pl_24_workshop
+            /blob/main/installation/README.md</li>
+        </ul>
       </section>
 
       <section>
@@ -809,7 +811,11 @@
       </section>
       </section>
 
+      
+
+
       <section>
+        <section>
         <h4>Bibliography</h4>
         <ol>
           <li>"Introduction to Concurrency in Programming Languages", Matthew J. Sottile, Timothy G. Mattson, Craig E Rasmussen</li>
@@ -824,6 +830,20 @@
           <li>"Python is removing the GIL and increasing concurrency.", Essalhiwafaa, https://medium.com/@essalhiwafaa05/python-is-removing-the-gil-and-increasing-concurrency-f38dcd6d4f5b</li>
           <li>"Orsted presentation template", Piotr Grędowski, https://github.com/ors-garage/company-presentation-template-revealjs</li>
         </ol>
+      </section>
+      <section>
+        <ol>
+          <li value="12">
+            "PEP 554 – Multiple Interpreters in the Stdlib", Eric Snow, https://peps.python.org/pep-0554/
+          </li>
+          <li>
+            "PEP 684 – A Per-Interpreter GIL", Eric Snow, https://peps.python.org/pep-0684/
+          </li>
+          <li>
+            "PEP 703 – Making the Global Interpreter Lock Optional in CPython", Łukasz Langa, https://peps.python.org/pep-0703/
+          </li>
+        </ol>
+      </section>
       </section>
 
     </div>
