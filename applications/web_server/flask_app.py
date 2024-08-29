@@ -11,7 +11,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-memory_info = True
+memory_info = False
+process = None
 
 if memory_info:
     try:
@@ -19,7 +20,6 @@ if memory_info:
         process = psutil.Process()
         logger.info(f'Memory info enabled for process {process}')
     except Exception:
-        process = None
         logger.info('Unable to load process data with psutil')
 
 

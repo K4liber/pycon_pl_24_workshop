@@ -119,12 +119,14 @@ CPUs = 8
 python.exe -m hypercorn -w1 flask_app:app
 INFO: Testing server: (GIL enabled) 3.13.0rc1 (tags/v3.13.0rc1:e4a3e78, Jul 31 2024, 20:58:38) [MSC v.1940 64 bit (AMD64)])
 INFO: 40 tasks executed in 31.31s
+INFO: Overall memory usage: 44.28125 [MB]
 ```
 2. multiprocesses
 ```
 python.exe -m hypercorn -w8 flask_app:app
 INFO: Testing server: (GIL enabled) 3.13.0rc1 (tags/v3.13.0rc1:e4a3e78, Jul 31 2024, 20:58:38) [MSC v.1940 64 bit (AMD64)])
 INFO: 40 tasks executed in 11.18s
+INFO: Overall memory usage: 348.26171875 [MB]
 ```
 3. subinterpreters
 ```
