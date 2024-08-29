@@ -1,16 +1,15 @@
 # PyCon PL'24 
 
-## Tytuł zgłoszenia:
+## Title:
  
 Multi-core processing in Python using Per-interpreter GIL
 
-## Krótki opis(128)
+## Description 
  
 Exploring a new Python feature called Per-interpreter GIL. It allows to use multiple cores in a single Python (CPython) process.
 
-## Cel propozycji (3072)
- 
-`Napisz krótko co jest celem Twojej propozycji (np. zapoznanie uczestników z ciekawym problemem X, biblioteką Y, którą stworzyłeś/stworzyłaś)`
+## Goal (3072)
+
 
 We are going to take a closer look at a new feature in Python (CPython) called Per-interpreter GIL. The workshop equips participants with a better understanding of Per-interpreter GIL and its benefits for multi-core processing in Python. It aims to utilize computing resources in a more efficient way. The feature is accessible through the Python/C API starting from Python version 3.12. A Pythonic interface for this feature is anticipated to be released with Python version 3.13 (coming out on October 2024).
 
@@ -30,9 +29,7 @@ During the workshop we are going to learn:
 
 - Performance Benchmarks: Attendees explore performance benchmarks comparing thread-based, process-based, and Per-interpreter GIL-based execution. We are going to visualize results of the benchmarks and judge if Per-interpreter GIL architecture shows significant performance gains in the long term perspective.
 
-## Grupa docelowa (3072)
-
-`Napisz krótko, do kogo adresowana jest Twoja propozycja (np. osoby tworzące aplikacje webowe)`
+## Target audience
 
 The workshop is addressed to intermediate programmers:
 
@@ -42,9 +39,7 @@ Note for Python newbies/beginners:
 
 While the workshop is targeted towards intermediate programmers, beginners with basic IT knowledge are also welcome to attend and can benefit from the workshop. Being a PyCon participant does not always indicate any knowledge about Python. For example, one might be a Java programmer and out of curiosity would like to see what's going on on the other side of the force. Without any Python knowledge, the workshop can still be a valuable experience, beacuse we are going to present some generic IT concepts. Every person with basic IT knowledge can learn something from the workshop. If you just starting with Python, it could be hard to understand some of the things we are going to talk about. Still you will manage to understand some parts and can ask for clarification on the other ones. We are happy to answer your questions both during the workshop and after its completion.
 
-## Szczegółowy abstract (6144)
- 
-`Zamieść szczegółowy opis swojej propozycji (opis ten będzie widoczny dla Komitetu Programowego, natomiast nie będzie publicznie dostępny na stronie w razie akceptacji)`
+## Detailed abstract
 
 1. About
 
@@ -65,9 +60,7 @@ The GIL assure that only one thread executes Python bytecode at a time. While th
 
 Beyond theoretical explanation, we are going to present a performance of regular threads/processed based applications in comparison to Per-interpreter GIL based one. We are going to prepare a basic sever-side and desktop (PyQT) applications to experiment with. The participants are going to play with the prepared code. We will together experiment with different scenarios. As a final step, together, we are going to discuss and summarize the benefits we can get from using the Per-interpreter GIL.
 
-## Plan propozycji (3072)
-
-`Przedstaw plan swojej propozycji w punktach, przypisując ilość czasu na poszczególne jej części`
+## Agenda of proposal (3072)
 
 1. Theoretical part (30 minutes)
 
@@ -85,5 +78,5 @@ Beyond theoretical explanation, we are going to present a performance of regular
 - Exercise 3. Testing Per-Interpreter GIL performance for desktop (PyQT) applications.
 - Exercise 4. Creating a summary of performance benchmarks results (e.g. in form of a chart).
 
-## Uwagi
+## Remarks
 Go to links.md.
