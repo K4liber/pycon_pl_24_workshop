@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
-import os
 from typing import Any, Callable
 
-CALLBACK_TYPE = Callable[[int, Any, dict | None], Any]
+from job.callables import CALLBACK_TYPE
+
 
 class RunnerInterface(metaclass=ABCMeta):
     def __init__(
@@ -28,14 +28,3 @@ class RunnerInterface(metaclass=ABCMeta):
     @property
     def runner_type(self) -> str:
         return self._runner_type
-
-    @staticmethod
-    def get_memory_usage(pid: int | None = None) -> dict[int, float | str] | None:
-        pid = pid if pid is not None else os.getpid()
-
-        try:
-            import psutil
-            process = psutil.Process(pid=pid)
-            return {pid: process.memory_info().rss / 1024 ** 2}
-        except ImportError:
-            return {pid: 'Unknown. "psutil" not installed'}

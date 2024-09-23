@@ -1,12 +1,9 @@
-import os
 from concurrent.futures import Future, ProcessPoolExecutor
 from functools import partial
-from multiprocessing import get_context
-from typing import Any, Callable
+from typing import Callable
 
-from runner.interface import RunnerInterface, CALLBACK_TYPE
-
-_pids: dict[int, int] = dict()
+from job.callables import CALLBACK_TYPE, CallableReturn
+from runner.interface import RunnerInterface
 
 
 def _callback(
@@ -16,40 +13,22 @@ def _callback(
     if future.exception():
         print(f'Exception: {future.exception()}')
 
-    result, pid, memory_usage = future.result()
-    
-    if pid in _pids:
-        worker_id = _pids[pid]
-    else:
-        _pids[pid] = len(_pids)
-        worker_id = _pids[pid]
-
-    if memory_usage:
-        callback(worker_id, result, memory_usage)
-    else:
-        callback(worker_id, result)
-
-
-def _callable(
-    callable: Callable[[], Any]
-) -> tuple[Any, int, dict[int, float] | None]:
-    result = callable()
-    pid = os.getpid()
-    return result, pid, RunnerInterface.get_memory_usage(pid=pid)
+    callable_result = future.result()
+    callback(callable_result)
 
 
 class RunnerProcesses(RunnerInterface):
 
     def start(
         self,
-        callables_list: list[Callable[[], Any]],
+        callables_list: list[Callable[[], CallableReturn]],
         callback: CALLBACK_TYPE
     ) -> None:
-        mp_context = get_context('spawn')  # Force the same context on both Unix and Windows
+        mp_context = None  # get_context('spawn')  # Force the same context on both Unix and Windows
 
         with ProcessPoolExecutor(self._no_workers, mp_context=mp_context) as executor:
             for callable in callables_list:
-                task = executor.submit(partial(_callable, callable))
+                task = executor.submit(callable)
                 task.add_done_callback(
                     partial(
                         _callback, callback
@@ -57,6 +36,3 @@ class RunnerProcesses(RunnerInterface):
                 )
         
             callback()
-
-        global _pids
-        _pids = dict()

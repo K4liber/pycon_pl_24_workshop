@@ -2,12 +2,12 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 import pickle
 from textwrap import dedent
-from threading import current_thread
 from typing import Any, Callable
 
 import _interpreters as interpreters
 
-from runner.interface import RunnerInterface, CALLBACK_TYPE
+from job.callables import CALLBACK_TYPE
+from runner.interface import RunnerInterface
 
 
 def _run(
@@ -42,20 +42,13 @@ def _run(
                 """
             )
         )
-        current_thread_name = current_thread().getName()
-        thread_id = current_thread_name[-1]
-
-        try:
-            thread_id = int(thread_id)
-        except ValueError:
-            thread_id = 0
 
         with open(result_read_pipe, 'rb') as r_pipe:
             result = pickle.load(r_pipe)
     except Exception as exc:
-        callback(-1, str(exc))
+        callback(str(exc))
 
-    callback(int(thread_id), result)
+    callback(result)
 
 
 class RunnerSubinterpreters(RunnerInterface):
