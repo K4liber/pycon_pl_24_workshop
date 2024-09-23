@@ -1,9 +1,9 @@
 from concurrent.futures import Future, ThreadPoolExecutor
 from functools import partial
-from threading import current_thread
 from typing import Any, Callable
 
-from runner.interface import RunnerInterface, CALLBACK_TYPE
+from job.callables import CALLBACK_TYPE
+from runner.interface import RunnerInterface
 
 
 def thread_callback(
@@ -13,14 +13,7 @@ def thread_callback(
     if future.exception():
         print(f'Exception: {future.exception()}')
 
-    thread_id = current_thread().getName()[-1]
-
-    try:
-        thread_id = int(thread_id)
-    except ValueError:
-        thread_id = 0
-
-    callback(thread_id, future.result())
+    callback(future.result())
 
 
 class RunnerThreads(RunnerInterface):

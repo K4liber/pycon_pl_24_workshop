@@ -1,7 +1,7 @@
+import logging
 import os
 import time
 from functools import partial
-from typing import Any
 
 from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
                              QLineEdit, QMainWindow, QProgressBar, QPushButton,
@@ -9,9 +9,14 @@ from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
 from PyQt5 import QtCore
 
 import config
-from job.callables import get_available_callables, get_callable
+from job.callables import CallableReturn, get_available_callables, get_callable
 from runner.factory import RUNNER_TYPE, get_runner
-from runner.interface import RunnerInterface
+
+logging.basicConfig(
+    format='%(levelname)s: %(message)s',
+)
+_logger = logging.getLogger(__name__)
+_logger.setLevel(logging.INFO)
 
 
 class RunnerSignals(QtCore.QObject):
@@ -40,6 +45,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(0, 0, 400, 300)
         self._central_widget = QWidget()
         self._layout = QVBoxLayout()
+        self._thread_id_to_worker_id = dict()
         # Start button
         self._start_button = QPushButton('Start')
         self._start_button.clicked.connect(self._start_job)
@@ -135,31 +141,40 @@ class MainWindow(QMainWindow):
         self._timing_init_value.setText('-')
         self._timing_overall_value.setText('-')
         self._pid_to_memory_usage.clear()
+        self._thread_id_to_worker_id.clear()
 
     def _worker_type_changed(self, _) -> None:
         self._clear()
 
     def _callback(
             self,
-            worker_id: int | str | None = None,
-            result: Any = None,
-            pid_to_memory_usage: dict[int, float] | None = None
+            callable_return: CallableReturn | None = None
         ) -> None:
-        if pid_to_memory_usage:
-            self._pid_to_memory_usage.update(pid_to_memory_usage)
+        if callable_return:
+            self._pid_to_memory_usage.update(callable_return.pid_to_memory_usage)
 
-        self.signals.finished.emit((worker_id, result))
+        self.signals.finished.emit(callable_return)
 
-    def on_runner_finished(self, args: tuple[int | str | None, Any]) -> None:
-        worker_id, result = args
+    def _get_worker_id(self, thread_id: int) -> int:
+        if thread_id not in self._thread_id_to_worker_id:
+            self._thread_id_to_worker_id[thread_id] = len(self._thread_id_to_worker_id)
 
-        if worker_id is not None:
-            print(f'Task completed. Worker id = {worker_id}, result = {result}')
+        return self._thread_id_to_worker_id[thread_id]
+
+    def on_runner_finished(
+            self,
+            callable_return: CallableReturn | None = None
+        ) -> None:
+        worker_id = None
+
+        if callable_return is not None:
+            worker_id = self._get_worker_id(thread_id=callable_return.thread_id)
+            _logger.info(f'Task completed. Worker id = {worker_id}, result = {callable_return.result}')
         else:
-            print('Tasks started successfully.')
+            _logger.info('Tasks started successfully.')
 
         if worker_id is not None:
-            self._advance_progress_bar(worker_index=int(worker_id))
+            self._advance_progress_bar(worker_index=worker_id)
             self._advance_progress_bar()
         else:
             init_time = int((time.time() - self._time_start) * 100)/100
@@ -168,7 +183,7 @@ class MainWindow(QMainWindow):
         self.repaint()
 
     def _start_job(self) -> None:
-        print('#' * 50)
+        _logger.info('#' * 50)
         self._clear()
         self._worker_type_combo.setDisabled(True)
         self._start_button.setDisabled(True)
@@ -178,14 +193,18 @@ class MainWindow(QMainWindow):
         self.repaint()
         runner = get_runner(runner_type=self._worker_type_combo.currentText())
         self._time_start = time.time()
-        selected_callable = get_callable(self._function_selection_combo.currentText())
-        args_list = self._function_args_text_area.text().split(',')
+        args = self._function_args_text_area.text().split(',')
+        selected_callable = get_callable(
+            callable_name=self._function_selection_combo.currentText(),
+            args=args,
+            use_psutil=self._worker_type_combo.currentText() != RUNNER_TYPE.SUBINTERPRETER
+        )
         callables_list = [
-            partial(selected_callable, *args_list)
+            selected_callable
             for _ in range(config.NUMBER_OF_JOBS)
         ]
         main_process_pid = os.getpid()
-        print(
+        _logger.info(
             f'Starting runner "{runner.runner_type}" with {runner.no_workers} workers.\n'
             f'Number of tasks: {config.NUMBER_OF_JOBS}\n'
             f'Main process PID = {main_process_pid}\n'
@@ -197,9 +216,6 @@ class MainWindow(QMainWindow):
                 callback=self._callback
             )
         )
-        self._pid_to_memory_usage.update(RunnerInterface.get_memory_usage(
-            pid=main_process_pid
-        ))
         QtCore.QThreadPool.globalInstance().start(runnable)
 
     def _advance_progress_bar(self, worker_index: int | None = None) -> None:
@@ -217,14 +233,15 @@ class MainWindow(QMainWindow):
             init_time = self._timing_init_value.text()
             overall_time = str(int((time.time() - self._time_start) * 100)/100)
             self._timing_overall_value.setText(overall_time)
-            print(f'All tasks completed successfully in {overall_time} [s]. Init time: {init_time} [s].')
+            _logger.info('-' * 10 + 'SUMMARY' + '-' * 10)
+            _logger.info(f'All tasks completed successfully in {overall_time} [s]. Init time: {init_time} [s].')
             self._worker_type_combo.setDisabled(False)
             self._start_button.setDisabled(False)
             self._start_button.setText("Start")
             self._function_selection_combo.setDisabled(False)
             self._function_args_text_area.setDisabled(False)
-            print(f'PID to memory usage (in MB): {self._pid_to_memory_usage}')
-            print(f'Overall memory usage: {sum(self._pid_to_memory_usage.values())} [MB]')
+            _logger.info(f'PID to memory usage (in MB): {self._pid_to_memory_usage}')
+            _logger.info(f'Overall memory usage: {sum(self._pid_to_memory_usage.values())} [MB]')
 
     def _create_progress_bars(self, number_of_workers: int) -> None:
         for _ in range(number_of_workers):
@@ -240,7 +257,7 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == '__main__':
-    print(config.sys_info())
+    _logger.info(config.sys_info())
     app = QApplication([])
     window = MainWindow()
     window.show()
