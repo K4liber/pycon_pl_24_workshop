@@ -34,7 +34,7 @@ def _callback(
     if callable_return is None:
         logger.info(f'Execution started with runner {runner_type}')
     else:
-        logger.info(f'Worker id: {callable_return.thread_id}, result: {callable_return.result}')
+        logger.info(f'Thread id: {callable_return.thread_id}, result: {callable_return.result}')
         _callable_returns.append(callable_return)
 
 

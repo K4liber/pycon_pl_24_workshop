@@ -2,11 +2,12 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 import pickle
 from textwrap import dedent
+from threading import get_native_id
 from typing import Any, Callable
 
 import _interpreters as interpreters
 
-from job.callables import CALLBACK_TYPE
+from job.callables import CALLBACK_TYPE, CallableReturn
 from runner.interface import RunnerInterface
 
 
@@ -46,7 +47,13 @@ def _run(
         with open(result_read_pipe, 'rb') as r_pipe:
             result = pickle.load(r_pipe)
     except Exception as exc:
-        callback(str(exc))
+        callback(
+            CallableReturn(
+                thread_id=get_native_id(),
+                result=str(exc),
+                pid_to_memory_usage=dict()
+            )
+        )
 
     callback(result)
 

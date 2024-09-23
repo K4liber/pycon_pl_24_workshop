@@ -148,12 +148,12 @@ class MainWindow(QMainWindow):
 
     def _callback(
             self,
-            callback_return: CallableReturn | None = None
+            callable_return: CallableReturn | None = None
         ) -> None:
-        if callback_return:
-            self._pid_to_memory_usage.update(callback_return.pid_to_memory_usage)
+        if callable_return:
+            self._pid_to_memory_usage.update(callable_return.pid_to_memory_usage)
 
-        self.signals.finished.emit(callback_return)
+        self.signals.finished.emit(callable_return)
 
     def _get_worker_id(self, thread_id: int) -> int:
         if thread_id not in self._thread_id_to_worker_id:
@@ -163,13 +163,13 @@ class MainWindow(QMainWindow):
 
     def on_runner_finished(
             self,
-            callback_return: CallableReturn | None = None
+            callable_return: CallableReturn | None = None
         ) -> None:
         worker_id = None
 
-        if callback_return is not None:
-            worker_id = self._get_worker_id(thread_id=callback_return.thread_id)
-            _logger.info(f'Task completed. Worker id = {worker_id}, result = {callback_return.result}')
+        if callable_return is not None:
+            worker_id = self._get_worker_id(thread_id=callable_return.thread_id)
+            _logger.info(f'Task completed. Worker id = {worker_id}, result = {callable_return.result}')
         else:
             _logger.info('Tasks started successfully.')
 
@@ -196,7 +196,8 @@ class MainWindow(QMainWindow):
         args = self._function_args_text_area.text().split(',')
         selected_callable = get_callable(
             callable_name=self._function_selection_combo.currentText(),
-            args=args
+            args=args,
+            use_psutil=self._worker_type_combo.currentText() != RUNNER_TYPE.SUBINTERPRETER
         )
         callables_list = [
             selected_callable
