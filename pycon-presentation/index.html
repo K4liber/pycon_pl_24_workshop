@@ -190,6 +190,10 @@
       <section>
         <section>
           <img style="height: 11em;" data-src="_assets\_images\pi.png" />
+          <aside class="notes">
+            Tell about default CPython interpreter. You can enable them by clicking `S` key. 📝
+            <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+          </aside>
         </section>
         <section>
           <h4>Bytecode [3]</h4>
@@ -312,6 +316,57 @@
           </div>
           <div class="image-text" style="float: left;">
             In essence, GIL is a mutex, a lock in CPython that allows only one thread at a time to execute Python bytecode.
+          </div>
+        </section>
+
+        <section>
+          <h4>Thread-switching</h4>
+          <div>
+            <div style="width: 50%; float:left; font-size: 0.7em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                  >>>
+                  # THREAD A
+                  41           RESUME                   0
+                 
+                  42           LOAD_FAST
+                               LOAD_CONST
+                               COPY
+                               COPY
+                               BINARY_SUBSCR
+                               LOAD_CONST
+                               BINARY_OP # Perform addition - thread switch
+                               SWAP
+                               SWAP
+                               STORE_SUBSCR # Store subscription - thread-switch
+                               RETURN_CONST             0 (None)
+                </code>
+              </pre>
+            </div>
+            <div style="width: 50%; float:right; font-size: 0.7em;">
+              <pre>
+                <code data-trim data-noescape class="language-python">
+                  >>>
+                  # THREAD B
+                  41           RESUME                   0
+                 
+                  42           LOAD_FAST
+                               LOAD_CONST
+                               COPY
+                               COPY
+                               BINARY_SUBSCR
+                               LOAD_CONST
+                               BINARY_OP # Perform addition - thread switch
+                               SWAP
+                               SWAP
+                               STORE_SUBSCR
+                               RETURN_CONST
+                </code>
+              </pre>
+            </div>
+          </div>
+          <div class="image-text" style="float: left;">
+            In essence, thread-switching can happen in `BINARY_SUBSCR`, `BINARY_OP`, `STORE_SUBSCR`.
           </div>
         </section>
 
