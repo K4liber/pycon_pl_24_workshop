@@ -149,31 +149,20 @@
       <a href="https://orsted.com">
         <img src="https://orstedcdn.azureedge.net/-/media/www/images/corp/graphics/icons/favicon.ico" alt="Orsted logo">
       </a>
-      <span>Multi-core processing in Python using Per-interpreter GIL, 29.08.2024</span>
+      <span>Multi-core processing in Python 3.13, October 2024</span>
     </footer>
     <div class="slides">
 
       <section>
-        <h3>Multi-core processing in Python using Per-interpreter GIL</h3>
-        <p>PyConPL 2024, Gliwice</p>
+        <h4>Multi-core processing in Python 3.13</h4>
+        <p>Python - CoP, October 2024, Orsted</p>
       </section>
       <section>
         <h3>Agenda</h3>
         <ol style="font-size: 1em;">
           <li>Theoretical background</li>
-          <li>Workshop technical setup</li>
-          <li>Quiz</li>
-          <li>Web-server app</li>
+          <li>Performance benchmarks - based on workshop set-up</li>
         </ol>
-      </section>
-
-      <section>
-        <h4>About Ørsted</h4>
-        <img style="height: 9em;" data-src="_assets\_images\orsted.jpg" />
-        <div class="image-text" style="float: left;">
-          Ørsted is the global-leader in offshore wind power, and supplies large-scale and cost-competitive offshore wind energy,
-          onshore wind energy, and solar energy solutions.
-        </div>
       </section>
 
       <section>
@@ -181,12 +170,10 @@
         <div style="column-count: 4;">
           <div style="text-align: left">
             <p>Kamila Smolińska</p>
-            <h6>Full-Stack Developer</h6>
           </div>
           <img style="height: 6.5em;" data-src="_assets\_images\kamka.png" />
           <div style="text-align: left">
             <p>Jan Bielecki</p>
-            <h6>Full-Stack Developer</h6>
           </div>
           <img style="height: 6.5em;" data-src="_assets\_images\janek.png" />
       </section>
@@ -207,6 +194,10 @@
         <section>
           <h4>Bytecode [3]</h4>
           <img style="height: 10em;" data-src="_assets\_images\interpreter.jpg" />
+          <aside class="notes">
+            Tell about default CPython interpreter. You can enable them by clicking `S` key. 📝
+            <a href="https://revealjs.com/speaker-view/" target="_blank">More info</a>
+          </aside>
         </section>
 
         <section>
