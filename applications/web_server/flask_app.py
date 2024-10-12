@@ -11,7 +11,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-memory_info = False
+memory_info = True
 process = None
 
 if memory_info:
@@ -19,8 +19,8 @@ if memory_info:
         import psutil
         process = psutil.Process()
         logger.info(f'Memory info enabled for process {process}')
-    except Exception:
-        logger.info('Unable to load process data with psutil')
+    except Exception as e:
+        logger.info(f'Unable to load process data with psutil: {e}')
 
 
 app = Flask(__name__)
