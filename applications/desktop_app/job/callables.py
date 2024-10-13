@@ -5,19 +5,11 @@ import os
 import threading
 from typing import Any, Callable
 
+from job.callable_return import CallableReturn
 from task.fibonacci import fibonacci
 
 
 _logger = logging.getLogger(__name__)
-
-
-@dataclass
-class CallableReturn:
-    thread_id: int
-    result: Any
-    pid_to_memory_usage: dict[int, float]
-
-
 CALLBACK_TYPE = Callable[[CallableReturn | None], Any]
 
 
@@ -29,14 +21,22 @@ class _Callables:
 
 CALLABLES = _Callables()
 
-_name_to_callable  = {
-    CALLABLES.FIBONACCI: fibonacci,
-    # CALLABLES.TEST_NUMPY: test_numpy
-}
+def _get_available_callables():
+    available_callables = {
+        CALLABLES.FIBONACCI: fibonacci,
+    }    
+
+    try:
+        from task.test_numpy import test_numpy
+        available_callables[CALLABLES.TEST_NUMPY] = test_numpy
+    except Exception:
+        pass
+
+    return available_callables
 
 
 def get_available_callables() -> list[str]:
-    return list(_name_to_callable.keys())
+    return list(_get_available_callables().keys())
 
 
 def wrapped_function(
@@ -79,7 +79,7 @@ def get_callable(
     return partial(
         wrapped_function,
         partial(
-            _name_to_callable[callable_name],
+            _get_available_callables()[callable_name],
             *args
         ),
         use_psutil

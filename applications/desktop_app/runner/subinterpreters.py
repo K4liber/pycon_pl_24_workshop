@@ -7,7 +7,8 @@ from typing import Any, Callable
 
 import _interpreters as interpreters
 
-from job.callables import CALLBACK_TYPE, CallableReturn
+from job.callables import CALLBACK_TYPE
+from job.callable_return import CallableReturn
 from runner.interface import RunnerInterface
 
 
@@ -28,17 +29,31 @@ def _run(
             dedent(f"""
                 import os
                 import sys
-                sys.path.append(os.getcwd())
-
                 import pickle
+                import traceback
+                from threading import get_native_id
 
-                with open({callable_read_pipe}, 'rb') as r_pipe:
-                    callable = pickle.load(r_pipe)
+                sys.path.append(os.getcwd())
                 
-                result = callable()
+                from job.callable_return import CallableReturn
+
+                try:
+                    
+                    with open({callable_read_pipe}, 'rb') as r_pipe:
+                        callable = pickle.load(r_pipe)
+
+                    result = callable()
+
+                except Exception as exc:
+                    print(traceback.format_exc())
+                    result = CallableReturn(
+                        thread_id=get_native_id(),
+                        result=str(exc),
+                        pid_to_memory_usage=dict()
+                    )
 
                 with open({result_write_pipe}, 'wb') as w_pipe:
-                   pickle.dump(result, w_pipe)
+                    pickle.dump(result, w_pipe)
 
                 """
             )

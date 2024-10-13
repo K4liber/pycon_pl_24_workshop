@@ -9,19 +9,26 @@ import config
 
 from runner.factory import RUNNER_TYPE, get_runner
 
-from job.callables import CallableReturn, get_callable, CALLABLES
+from job.callables import get_callable, CALLABLES
+from job.callable_return import CallableReturn
 
 
 logging.basicConfig(
     format='%(levelname)s: %(message)s',
+    level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-runner_type = RUNNER_TYPE.THREAD
+runner_type = RUNNER_TYPE.PROCESS
+callable_name = CALLABLES.TEST_NUMPY
+
+if runner_type == RUNNER_TYPE.SUBINTERPRETER and callable_name == CALLABLES.TEST_NUMPY:
+    # module numpy._core._multiarray_umath does not support loading in subinterpreters
+    raise ImportError(f'Cannot import numpy inside subinterpreter')
+
 runner = get_runner(runner_type=runner_type)
 function_args = [34]
 selected_function = get_callable(
-    CALLABLES.FIBONACCI,
+    callable_name=callable_name,
     args=function_args,
     use_psutil=runner_type != RUNNER_TYPE.SUBINTERPRETER  # module psutil._psutil_linux does not support loading in subinterpreters 
 )

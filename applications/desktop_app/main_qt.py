@@ -9,7 +9,8 @@ from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
 from PyQt5 import QtCore
 
 import config
-from job.callables import CallableReturn, get_available_callables, get_callable
+from job.callables import get_available_callables, get_callable
+from job.callable_return import CallableReturn
 from runner.factory import RUNNER_TYPE, get_runner
 
 logging.basicConfig(

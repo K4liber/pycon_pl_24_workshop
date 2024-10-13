@@ -2,7 +2,8 @@ from concurrent.futures import Future, ProcessPoolExecutor
 from functools import partial
 from typing import Callable
 
-from job.callables import CALLBACK_TYPE, CallableReturn
+from job.callables import CALLBACK_TYPE
+from job.callable_return import CallableReturn
 from runner.interface import RunnerInterface
 
 
